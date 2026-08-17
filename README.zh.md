@@ -23,9 +23,21 @@ DSH Web GUI 客户端插件：在对话「**会话结束 / 弹出选项 / 请求
 
 **方式二：dsh CLI（需 Node.js，两种用户都可用）**
 
+请**二选一**：根据你的实际运行方式（桌面版 / web 版）选择执行**其中一条**，不要两条都执行：
+
 ```bash
-npx @deepseek-ai/dsh plugin --profile desktop add github:miiaowuwu/dsh-event-sounds   # 桌面版用户
-npx @deepseek-ai/dsh plugin --profile web add github:miiaowuwu/dsh-event-sounds      # web 用户
+# 桌面版用户 —— 执行这一条
+npx @deepseek-ai/dsh plugin --profile desktop add github:miiaowuwu/dsh-event-sounds
+```
+
+```bash
+# web 用户（用 `npx dsh web` 运行）—— 执行这一条
+npx @deepseek-ai/dsh plugin --profile web add github:miiaowuwu/dsh-event-sounds
+```
+
+然后**重启** dsh（若尚未启动则直接启动）：
+
+```bash
 npx @deepseek-ai/dsh web
 ```
 

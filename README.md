@@ -23,9 +23,21 @@ The installer deploys the plugin to `$DSH_HOME/plugins/dsh-client-ui-event-sound
 
 **Option B — dsh CLI (needs Node.js, works for both):**
 
+Pick **the one command** that matches how you run dsh — Desktop or web — and run **only that one** (choose 1 of 2):
+
 ```bash
-npx @deepseek-ai/dsh plugin --profile desktop add github:miiaowuwu/dsh-event-sounds   # Desktop users
-npx @deepseek-ai/dsh plugin --profile web add github:miiaowuwu/dsh-event-sounds      # web users
+# Desktop users —— run this one
+npx @deepseek-ai/dsh plugin --profile desktop add github:miiaowuwu/dsh-event-sounds
+```
+
+```bash
+# web users (dsh runs via `npx dsh web`) —— run this one
+npx @deepseek-ai/dsh plugin --profile web add github:miiaowuwu/dsh-event-sounds
+```
+
+Then **restart** dsh (or just start it if it isn't running):
+
+```bash
 npx @deepseek-ai/dsh web
 ```
 
