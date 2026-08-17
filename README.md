@@ -25,8 +25,6 @@ npx @deepseek-ai/dsh web
 ```
 
 > GitHub 访问不稳定时改用本地路径安装：`npx @deepseek-ai/dsh plugin --profile web add link:D:/你的路径/dsh-event-sounds`
->
-> 重新生成发布 exe：`Install-Module ps2exe -Scope CurrentUser`（仅首次）后执行 `& releases\build-single-exe.ps1`，产物生成到 `releases\<版本>\`。
 
 ## 功能
 
@@ -53,8 +51,6 @@ dsh-event-sounds/
 ├── lib/
 │   ├── index.js          # 宿主端：/dsh-sounds-control 静态服务（list/config/音频）
 │   └── client.js         # 浏览器端：悬浮球 + 配置弹窗 + 触发监测 + 播放
-└── releases/             # ★ 发布目录：构建脚本（Setup/UnSetup exe 产物见 GitHub Releases）
-    └── build-single-exe.ps1    # 生成自包含安装/卸载 exe
 ```
 
 ## 双端结构
