@@ -4,10 +4,9 @@ config.json
 # 依赖
 node_modules/
 
-# 用户音频（版权素材不入公开仓库，避免侵权；保留 demo 与说明）
+# 用户音频（版权素材不入公开仓库，避免侵权；仅保留说明文件）
 sounds/*
 !sounds/README.txt
-!sounds/hirari-do-demo.wav
 
 # 临时 / 日志 / 系统
 *.log
