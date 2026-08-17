@@ -5,8 +5,8 @@
 #   右键本文件 ->「使用 PowerShell 运行」，或  & build-single-exe.ps1
 #
 # 产物（自动同步到 releases\<版本>\）：
-#   dsh-event-sounds-Setup-1.0-x64.exe      双击 = 安装（内嵌全部插件文件）
-#   dsh-event-sounds-UnSetup-1.0-x64.exe    双击 = 卸载
+#   dsh-event-sounds-Setup-1.0.0-x64.exe    双击 = 安装（内嵌全部插件文件）
+#   dsh-event-sounds-UnSetup-1.0.0-x64.exe  双击 = 卸载
 #   两个 exe 由同一份脚本编译，运行时会按自身文件名自动判断模式。
 #
 # 原理：把插件包运行所需的全部文件以 base64 内嵌进 exe，安装时解压到
@@ -18,7 +18,7 @@ $ErrorActionPreference = "Stop"
 $pkgDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 # ---- 版本与架构（改这里即可重新打包）----
-$releaseVersion = "1.0"
+$releaseVersion = "1.0.0"
 $arch          = "x64"
 $releaseDir    = Join-Path $pkgDir "releases\$releaseVersion"
 $setupExeName  = "dsh-event-sounds-Setup-$releaseVersion-$arch.exe"
@@ -173,8 +173,10 @@ Write-Host "[3/3] 编译 exe ..."
 Import-Module ps2exe
 Get-Process | Where-Object { $_.ProcessName -like "dsh-event-sounds*" } | Stop-Process -Force -ErrorAction SilentlyContinue
 
-$setupExe   = Join-Path $pkgDir $setupExeName
-$unsetupExe = Join-Path $pkgDir $unsetupExeName
+# 产物直接输出到发布目录（releases\<版本>），不在包根留副本
+New-Item -ItemType Directory -Force -Path $releaseDir | Out-Null
+$setupExe   = Join-Path $releaseDir $setupExeName
+$unsetupExe = Join-Path $releaseDir $unsetupExeName
 foreach ($out in @($setupExe, $unsetupExe)) {
     if (Test-Path $out) { try { [System.IO.File]::Delete($out) } catch {} }
 }
@@ -184,13 +186,7 @@ ps2exe -inputFile $genPath -outputFile $unsetupExe -noConsole:$false -version "$
 # 清理中间脚本（已编译进 exe）
 Remove-Item -Force $genPath -ErrorAction SilentlyContinue
 
-# 同步到发布目录（releases\<版本>）
-New-Item -ItemType Directory -Force -Path $releaseDir | Out-Null
-Copy-Item -Force $setupExe   (Join-Path $releaseDir $setupExeName)
-Copy-Item -Force $unsetupExe (Join-Path $releaseDir $unsetupExeName)
-
 Write-Host ""
 Write-Host "完成！"
 Write-Host "  安装：$setupExe"
 Write-Host "  卸载：$unsetupExe"
-Write-Host "  已同步：$releaseDir"
