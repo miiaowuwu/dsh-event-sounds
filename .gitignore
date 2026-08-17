@@ -1,14 +1,2 @@
 # 运行时状态（用户配置，不入库）
 config.json
-
-# 依赖
-node_modules/
-
-# 用户音频（版权素材不入公开仓库，避免侵权；仅保留说明文件）
-sounds/*
-!sounds/README.txt
-
-# 临时 / 日志 / 系统
-*.log
-.DS_Store
-Thumbs.db
