@@ -1,8 +1,8 @@
-# sounds-control —— 语音控制插件（安洁莉娜「hirari do～」）
+# dsh-event-sounds —— 语音控制插件（安洁莉娜「hirari do～」）
 
 DSH Web GUI 客户端插件：在对话「**会话结束 / 弹出选项 / 请求许可 / 停止**」时播放指定音效。
 
-> 🐋 角色引用：本项目为《明日方舟》（Arknights）角色 **安洁莉娜（Angelina）** 的粉丝向自制项目，默认示例音效为安洁莉娜「hirari do～」语音片段，仅供个人学习与娱乐使用，**不用于任何商业用途**。
+> 🐋 角色引用：本项目为《明日方舟》（Arknights）角色 **安洁莉娜（Angelina）** 的粉丝向自制项目，默认示例音效为安洁莉娜「hirari do～」与「呢？」语音片段，仅供个人学习与娱乐使用，**不用于任何商业用途**。
 
 ## 功能
 
@@ -20,9 +20,9 @@ DSH Web GUI 客户端插件：在对话「**会话结束 / 弹出选项 / 请求
 ## 目录结构
 
 ```
-sounds-control/
+dsh-event-sounds/
 ├── package.json        # 包声明（dsh.client / dsh.bundle.patch）
-├── cordis.patch.yml    # 组成补丁：挂载行 ui-sounds-control
+├── cordis.patch.yml    # 组成补丁：挂载行 ui-event-sounds
 ├── README.md
 ├── LICENSE
 ├── sounds/             # ★ 把音频文件放这里（mp3/wav/ogg 等）
@@ -39,13 +39,13 @@ sounds-control/
 dsh plugin --profile desktop add github:<owner>/<repo>
 ```
 
-或手动挂载：把本目录链接到 DSH profile 的 `node_modules/dsh-client-ui-sounds-control`，
+或手动挂载：把本目录链接到 DSH profile 的 `node_modules/dsh-client-ui-event-sounds`，
 在 profile `package.json` 的 `dependencies` 与 `dsh.profile.bundles` 中登记后 `pnpm install`，
 再重启 DSH 桌面端。
 
 ## 使用
 
-1. 把音频文件（如安洁莉娜「hirari do～」语音片段）放入 `sounds/` 文件夹
+1. 把音频文件（如安洁莉娜「hirari do～」、安洁莉娜「呢？」语音片段）放入 `sounds/` 文件夹
 2. 点击悬浮球打开配置弹窗 → 「刷新」音效列表 → 为各触发条件选择音效
 3. ▶ 播放测试 验证声音；之后对话中的对应事件会自动播放
 4. 「外观」里可切换 鲸鱼娘 / 纯白 / 纯黑 风格
@@ -53,7 +53,7 @@ dsh plugin --profile desktop add github:<owner>/<repo>
 ## 免责声明
 
 - 本项目为 **粉丝向（非官方）个人项目**，与《明日方舟》官方及上海鹰角网络科技有限公司（Hypergryph）无任何隶属、赞助或授权关系。
-- 项目中引用的角色形象、名称、台词及语音素材（含安洁莉娜「hirari do～」）版权归《明日方舟》官方及其相关权利人所有；语音的著作权归相应的配音演员所有。
+- 项目中引用的角色形象、名称、台词及语音素材（含安洁莉娜「hirari do～」「呢？」语音）版权归《明日方舟》官方及其相关权利人所有；语音的著作权归相应的配音演员所有。
 - 本项目仅用于个人学习、研究与娱乐，**不用于任何商业用途**，不以此牟利。
 - 项目自带的音效素材来源于使用者自行放入的本地音频文件，使用者须确保其使用方式符合相关法律法规及原权利人的要求。
 - 如相关权利人认为本项目的任何内容构成侵权，请联系项目作者删除相关素材，我们将立即处理。

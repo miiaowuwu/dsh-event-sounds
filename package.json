@@ -1,5 +1,5 @@
 {
-  "name": "dsh-client-ui-sounds-control",
+  "name": "dsh-client-ui-event-sounds",
   "description": "DSH Web GUI 语音控制插件：对话「会话结束 / 弹出选项 / 请求许可 / 停止」时播放指定音效；可拖动悬浮球（靠边缩成半球）、可移动置顶配置弹窗；音效来自插件包 sounds/ 文件夹的本地音频；支持鲸鱼娘/纯白/纯黑三种外观；配置自动保存（浏览器 + 宿主 config.json 双持久化）；启动即预加载。Hot-pluggable — mounted via dsh plugin add + cordis.patch.yml, no dsh source changes.",
   "version": "0.1.0",
   "type": "module",
@@ -43,6 +43,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/miiaowuwu/sounds-control.git"
+    "url": "https://github.com/miiaowuwu/dsh-event-sounds.git"
   }
 }
