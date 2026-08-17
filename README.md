@@ -29,12 +29,12 @@ Pick **the one command** that matches how you run dsh — Desktop or web — and
 
 ```bash
 # Desktop users —— run this one
-npx @deepseek-ai/dsh plugin --profile desktop add github:miiaowuwu/dsh-event-sounds --config.minimumReleaseAge=0
+npx @deepseek-ai/dsh plugin --profile desktop add dsh-client-ui-event-sounds --config.minimumReleaseAge=0
 ```
 
 ```bash
 # web users (dsh runs via `npx dsh web`) —— run this one
-npx @deepseek-ai/dsh plugin --profile web add github:miiaowuwu/dsh-event-sounds --config.minimumReleaseAge=0
+npx @deepseek-ai/dsh plugin --profile web add dsh-client-ui-event-sounds --config.minimumReleaseAge=0
 ```
 
 Then **restart** dsh (or just start it if it isn't running):
@@ -43,8 +43,7 @@ Then **restart** dsh (or just start it if it isn't running):
 npx @deepseek-ai/dsh web
 ```
 
-> The trailing `--config.minimumReleaseAge=0` bypasses pnpm's supply-chain gate (needed when you hit `minimumReleaseAge` errors).
-> If GitHub is unstable in your region (errors like `UND_ERR_DESTROYED` / `ECONNRESET` / `ETIMEDOUT`), install from a local path instead: `npx @deepseek-ai/dsh plugin --profile <name> add link:D:/your/path/dsh-event-sounds --config.minimumReleaseAge=0`
+> `dsh-client-ui-event-sounds` is the **npm package name** (installed from the npm registry — no direct GitHub connection needed); the trailing `--config.minimumReleaseAge=0` bypasses pnpm's supply-chain gate (when you hit `minimumReleaseAge` errors).
 >
 > Development convenience: `npm run setup` auto-detects all local profiles and registers this plugin into each of them; `npm run setup:deploy` deploys a copy to `$DSH_HOME/plugins` and points every profile at it (release/fixed-use mode). Add `--profile <name>` (e.g. `node tools/install.mjs --profile web --unify`) to operate on a single profile only.
 
