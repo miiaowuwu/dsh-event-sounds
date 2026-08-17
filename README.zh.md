@@ -21,9 +21,10 @@ DSH Web GUI 客户端插件：在对话「**会话结束 / 弹出选项 / 请求
 
 > 说明（仅了解原理，无需任何操作）：安装器把插件部署到 `$DSH_HOME\plugins\dsh-client-ui-event-sounds`，并扫描 `$DSH_HOME\profiles` 下**所有已初始化的 profile**（web / desktop / …）逐一调用官方 `dsh plugin` 命令登记，使各 profile 共用同一份部署副本；若本机没有 dsh CLI，会自动穷举补齐（桌面应用自带 runtime → 系统 npx → 自动下载 Node.js）。安装完成后**自动重启 dsh**：桌面版像双击软件一样打开（无终端窗口，关闭安装器窗口不影响）；web 版在后台常驻启动，并自动打开浏览器跳转页面。全程自动化，不手改任何配置。
 
-**方式二：dsh CLI（需 Node.js，两种用户都可用）**
+**方式二：dsh CLI（需 Node.js，两种用户都可用；如需安装后自动重启，推荐方式一）**
 
 > 如果 dsh 尚未运行，请先启动一次（`npx @deepseek-ai/dsh web`），完成 profile 初始化，再进行安装。
+> 尚未安装 dsh？下载 DeepSeek Harness 桌面版，或安装 Node.js（https://nodejs.org）后运行 `npx @deepseek-ai/dsh web`。
 
 请**二选一**：根据你的实际运行方式（桌面版 / web 版）选择执行**其中一条**，不要两条都执行：
 

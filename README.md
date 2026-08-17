@@ -21,9 +21,10 @@ Both methods work for **either** user type — Desktop users and `npx dsh web` u
 
 > Note (just how it works — no action needed): the installer deploys the plugin to `$DSH_HOME/plugins/dsh-client-ui-event-sounds` and registers it into **every initialized profile** (web, desktop, …) via the official `dsh plugin` command, so all profiles share the same copy. If no dsh CLI is found, it auto-detects one (desktop bundled runtime → system npx → downloads Node.js). On finish it **restarts dsh automatically**: Desktop launches exactly like double-clicking the app (no terminal window, unaffected by closing the installer); web runs in the background and your browser opens the page automatically. Fully automated, no manual config edits.
 
-**Option B — dsh CLI (needs Node.js, works for both):**
+**Option B — dsh CLI (needs Node.js, works for both; prefer Option A if you want auto-restart after install):**
 
 > If dsh isn't running yet, start it once first (`npx @deepseek-ai/dsh web`) so its profiles get initialized.
+> Don't have dsh yet? Download the DeepSeek Harness Desktop app, or install Node.js (https://nodejs.org) and run `npx @deepseek-ai/dsh web`.
 
 Pick **the one command** that matches how you run dsh — Desktop or web — and run **only that one** (choose 1 of 2):
 

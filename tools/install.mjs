@@ -227,7 +227,7 @@ console.log("目标 profile = " + (ONLY ? ONLY + "（仅此一个）" : "全部"
 if (DEPLOY) deploy();
 
 if (!existsSync(PROFILES_DIR)) {
-  console.log("未找到 profiles 目录：" + PROFILES_DIR + "（请先通过桌面版或 npx @deepseek-ai/dsh web 初始化过 dsh）");
+  console.log("未找到 profiles 目录：" + PROFILES_DIR + "（未检测到已安装的 dsh。请先下载 DeepSeek Harness 桌面版，或安装 Node.js（https://nodejs.org）后运行 npx @deepseek-ai/dsh web 完成首次初始化）");
   process.exit(failures === 0 ? 0 : 1);
 }
 
