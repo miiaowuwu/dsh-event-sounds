@@ -14,12 +14,12 @@ Both methods work for **either** user type — Desktop users and `npx dsh web` u
 
 1. **If dsh isn't running, start it once** (the Desktop app or `npx dsh web`) so its profiles get initialized — then **quit it** (the Desktop app or the `dsh web` server)
 2. Download [dsh-event-sounds-Setup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-Setup-1.1.0-x64.exe) and **double-click it**
-3. **Restart** — the 🔊 floating ball means it's installed
+3. The installer **restarts dsh automatically** — the 🔊 floating ball means it's installed
 
 The installer deploys the plugin to `$DSH_HOME/plugins/dsh-client-ui-event-sounds` and registers it into **every initialized profile** (web, desktop, …) via the official `dsh plugin` command, so all profiles share the same copy. If no dsh CLI is found, it auto-detects one (desktop bundled runtime → system npx → downloads Node.js). Fully automated, no manual config edits.
 
-- **Update**: run the Setup exe again and restart
-- **Uninstall**: double-click [dsh-event-sounds-UnSetup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.1.0-x64.exe) and restart
+- **Update**: run the Setup exe again (it restarts dsh automatically)
+- **Uninstall**: double-click [dsh-event-sounds-UnSetup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.1.0-x64.exe) — it restarts dsh automatically when done
 
 **Option B — dsh CLI (needs Node.js, works for both):**
 

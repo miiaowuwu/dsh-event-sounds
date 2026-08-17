@@ -14,12 +14,12 @@ DSH Web GUI 客户端插件：在对话「**会话结束 / 弹出选项 / 请求
 
 1. **如果 dsh 尚未运行，请先启动一次**（桌面应用或 `npx dsh web`），完成 profile 初始化；然后**退出**正在运行的 dsh（桌面应用或 `dsh web` 服务）
 2. 下载 [dsh-event-sounds-Setup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-Setup-1.1.0-x64.exe)，**双击**
-3. **重启**，看到 🔊 悬浮球即安装成功
+3. 安装器会**自动重启** dsh，看到 🔊 悬浮球即安装成功
 
 安装器把插件部署到 `$DSH_HOME\plugins\dsh-client-ui-event-sounds`，并扫描 `$DSH_HOME\profiles` 下**所有已初始化的 profile**（web / desktop / …）逐一调用官方 `dsh plugin` 命令登记，使各 profile 共用同一份部署副本；若本机没有 dsh CLI，会自动穷举补齐（桌面应用自带 runtime → 系统 npx → 自动下载 Node.js）。全程自动化，不手改任何配置。
 
-- **更新**：重新双击 Setup exe 并重启
-- **卸载**：双击 [dsh-event-sounds-UnSetup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.1.0-x64.exe) 并重启
+- **更新**：重新双击 Setup exe（会自动重启 dsh）
+- **卸载**：双击 [dsh-event-sounds-UnSetup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.1.0-x64.exe)（完成后会自动重启 dsh）
 
 **方式二：dsh CLI（需 Node.js，两种用户都可用）**
 
