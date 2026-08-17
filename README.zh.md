@@ -29,12 +29,12 @@ DSH Web GUI 客户端插件：在对话「**会话结束 / 弹出选项 / 请求
 
 ```bash
 # 桌面版用户 —— 执行这一条
-npx @deepseek-ai/dsh plugin --profile desktop add github:miiaowuwu/dsh-event-sounds
+npx @deepseek-ai/dsh plugin --profile desktop add github:miiaowuwu/dsh-event-sounds --config.minimumReleaseAge=0
 ```
 
 ```bash
 # web 用户（用 `npx dsh web` 运行）—— 执行这一条
-npx @deepseek-ai/dsh plugin --profile web add github:miiaowuwu/dsh-event-sounds
+npx @deepseek-ai/dsh plugin --profile web add github:miiaowuwu/dsh-event-sounds --config.minimumReleaseAge=0
 ```
 
 然后**重启** dsh（若尚未启动则直接启动）：
@@ -43,7 +43,8 @@ npx @deepseek-ai/dsh plugin --profile web add github:miiaowuwu/dsh-event-sounds
 npx @deepseek-ai/dsh web
 ```
 
-> GitHub 访问不稳定时改用本地路径安装：`npx @deepseek-ai/dsh plugin --profile <name> add link:D:/你的路径/dsh-event-sounds`
+> 命令末尾的 `--config.minimumReleaseAge=0` 用于绕过 pnpm 供应链闸门（报 `minimumReleaseAge` 错误时）。
+> GitHub 直连失败（网络受限，报 `UND_ERR_DESTROYED` / `ECONNRESET` / `ETIMEDOUT`）时改用本地路径安装：`npx @deepseek-ai/dsh plugin --profile <name> add link:D:/你的路径/dsh-event-sounds --config.minimumReleaseAge=0`
 >
 > 开发便利：`npm run setup` 自动检测本机所有 profile 并逐一登记本插件；`npm run setup:deploy` 把副本部署到 `$DSH_HOME/plugins` 并让所有 profile 指向它（发布/固定使用模式）。加 `--profile <name>`（如 `node tools/install.mjs --profile web --unify`）可只操作单个 profile。
 
