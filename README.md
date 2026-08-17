@@ -12,7 +12,7 @@ Both methods work for **either** user type — Desktop users and `npx dsh web` u
 
 **Option A — Setup installer (recommended, zero dependencies, works for both):**
 
-1. **Quit the running dsh** (the Desktop app or the `dsh web` server)
+1. **If dsh isn't running, start it once** (the Desktop app or `npx dsh web`) so its profiles get initialized — then **quit it** (the Desktop app or the `dsh web` server)
 2. Download [dsh-event-sounds-Setup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-Setup-1.1.0-x64.exe) and **double-click it**
 3. **Restart** — the 🔊 floating ball means it's installed
 
@@ -22,6 +22,8 @@ The installer deploys the plugin to `$DSH_HOME/plugins/dsh-client-ui-event-sound
 - **Uninstall**: double-click [dsh-event-sounds-UnSetup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.1.0-x64.exe) and restart
 
 **Option B — dsh CLI (needs Node.js, works for both):**
+
+> If dsh isn't running yet, start it once first (`npx @deepseek-ai/dsh web`) so its profiles get initialized.
 
 Pick **the one command** that matches how you run dsh — Desktop or web — and run **only that one** (choose 1 of 2):
 

@@ -12,7 +12,7 @@ DSH Web GUI 客户端插件：在对话「**会话结束 / 弹出选项 / 请求
 
 **方式一：Setup 安装器（推荐，零依赖，两种用户都可用）**
 
-1. **退出正在运行的 dsh**（桌面应用或 `dsh web` 服务）
+1. **如果 dsh 尚未运行，请先启动一次**（桌面应用或 `npx dsh web`），完成 profile 初始化；然后**退出**正在运行的 dsh（桌面应用或 `dsh web` 服务）
 2. 下载 [dsh-event-sounds-Setup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-Setup-1.1.0-x64.exe)，**双击**
 3. **重启**，看到 🔊 悬浮球即安装成功
 
@@ -22,6 +22,8 @@ DSH Web GUI 客户端插件：在对话「**会话结束 / 弹出选项 / 请求
 - **卸载**：双击 [dsh-event-sounds-UnSetup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.1.0-x64.exe) 并重启
 
 **方式二：dsh CLI（需 Node.js，两种用户都可用）**
+
+> 如果 dsh 尚未运行，请先启动一次（`npx @deepseek-ai/dsh web`），完成 profile 初始化，再进行安装。
 
 请**二选一**：根据你的实际运行方式（桌面版 / web 版）选择执行**其中一条**，不要两条都执行：
 
