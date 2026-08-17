@@ -30,8 +30,11 @@ const DEPLOY_DIR = join(DSH_HOME, "plugins", PKG_NAME);
 const args = process.argv.slice(2);
 const DRY = args.includes("--dry-run");
 const FIX = args.includes("--fix");
-const UNIFY = args.includes("--unify"); // 强制所有 profile 链接到目标目录
+const UNIFY = args.includes("--unify"); // 强制 profile 链接到目标目录
 const DEPLOY = args.includes("--deploy"); // 部署模式：统一走 DSH_HOME/plugins
+// 仅处理指定 profile（不传则处理全部）：支持「desktop 用 exe 部署、web 用开发目录」这类混合模式
+const profileIdx = args.indexOf("--profile");
+const ONLY = profileIdx !== -1 && args[profileIdx + 1] ? args[profileIdx + 1] : null;
 
 /** 链接目标：部署模式用 $DSH_HOME/plugins 下的副本，否则用当前开发目录 */
 const TARGET_DIR = DEPLOY ? DEPLOY_DIR : PKG_ROOT;
@@ -133,7 +136,8 @@ function addToProfile(profile, profileDir) {
 
 console.log("dsh-event-sounds 多 profile 自动配置（" + (DRY ? "dry-run，仅检测" : "实际配置") + "）");
 console.log("DSH_HOME = " + DSH_HOME);
-console.log("链接目标 = " + (DEPLOY ? DEPLOY_DIR + "（部署副本）" : PKG_ROOT + "（开发目录）") + "\n");
+console.log("链接目标 = " + (DEPLOY ? DEPLOY_DIR + "（部署副本）" : PKG_ROOT + "（开发目录）"));
+console.log("目标 profile = " + (ONLY ? ONLY + "（仅此一个）" : "全部") + "\n");
 
 if (DEPLOY) deploy();
 
@@ -145,8 +149,14 @@ if (!existsSync(PROFILES_DIR)) {
 const entries = readdirSync(PROFILES_DIR, { withFileTypes: true })
   .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules")
   .map((d) => d.name)
-  .sort();
+  .sort()
+  .filter((n) => !ONLY || n === ONLY);
 
+if (ONLY && entries.length === 0) {
+  const avail = readdirSync(PROFILES_DIR).filter((n) => n !== "node_modules" && !n.startsWith(".")).join("、");
+  console.log("未找到指定 profile：" + ONLY + (avail ? "（可用：" + avail + "）" : ""));
+  process.exit(1);
+}
 if (entries.length === 0) {
   console.log("profiles 目录下没有任何 profile");
   process.exit(0);

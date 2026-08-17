@@ -28,7 +28,7 @@ npx @deepseek-ai/dsh web
 
 > If GitHub is unstable in your region, install from a local path instead: `npx @deepseek-ai/dsh plugin --profile web add link:D:/your/path/dsh-event-sounds`
 >
-> Development convenience: `npm run setup` auto-detects all local profiles and registers this plugin into each of them; `npm run setup:deploy` deploys a copy to `$DSH_HOME/plugins` and points every profile at it (release/fixed-use mode).
+> Development convenience: `npm run setup` auto-detects all local profiles and registers this plugin into each of them; `npm run setup:deploy` deploys a copy to `$DSH_HOME/plugins` and points every profile at it (release/fixed-use mode). Add `--profile <name>` (e.g. `node tools/install.mjs --profile web --unify`) to operate on a single profile only — so desktop can stay on the deployed copy while web points at your dev directory.
 
 ## Features
 

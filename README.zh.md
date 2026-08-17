@@ -28,7 +28,7 @@ npx @deepseek-ai/dsh web
 
 > GitHub 访问不稳定时改用本地路径安装：`npx @deepseek-ai/dsh plugin --profile web add link:D:/你的路径/dsh-event-sounds`
 >
-> 开发便利：`npm run setup` 自动检测本机所有 profile 并逐一登记本插件；`npm run setup:deploy` 把副本部署到 `$DSH_HOME/plugins` 并让所有 profile 指向它（发布/固定使用模式）。
+> 开发便利：`npm run setup` 自动检测本机所有 profile 并逐一登记本插件；`npm run setup:deploy` 把副本部署到 `$DSH_HOME/plugins` 并让所有 profile 指向它（发布/固定使用模式）。加 `--profile <name>`（如 `node tools/install.mjs --profile web --unify`）可只操作单个 profile——例如 desktop 保持 exe 部署副本、web 指向开发目录的混合用法。
 
 ## 功能
 
