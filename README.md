@@ -37,7 +37,7 @@ npx @deepseek-ai/dsh plugin --profile desktop add dsh-client-ui-event-sounds --c
 npx @deepseek-ai/dsh plugin --profile web add dsh-client-ui-event-sounds --config.minimumReleaseAge=0
 ```
 
-Then **restart** dsh (or just start it if it isn't running):
+Then **restart** dsh yourself (the add command does **not** auto-start dsh) — Desktop users: open the DeepSeek Harness app; web users: run
 
 ```bash
 npx @deepseek-ai/dsh web

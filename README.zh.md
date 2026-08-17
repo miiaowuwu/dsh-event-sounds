@@ -37,7 +37,7 @@ npx @deepseek-ai/dsh plugin --profile desktop add dsh-client-ui-event-sounds --c
 npx @deepseek-ai/dsh plugin --profile web add dsh-client-ui-event-sounds --config.minimumReleaseAge=0
 ```
 
-然后**重启** dsh（若尚未启动则直接启动）：
+然后**自行启动/重启 dsh**（add 命令只登记插件，**不会自动启动**）——桌面版直接打开 DeepSeek Harness 桌面应用；web 版运行：
 
 ```bash
 npx @deepseek-ai/dsh web
