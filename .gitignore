@@ -4,3 +4,5 @@ config.json
 # 构建产物与发布目录（exe 上传到 GitHub Releases，不入库）
 *.exe
 releases/
+thesis/
+plan.md
