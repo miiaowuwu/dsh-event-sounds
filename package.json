@@ -11,8 +11,8 @@
   },
   "files": [
     "lib",
+    "sounds",
     "cordis.patch.yml",
-    "sounds/README.txt",
     "README.md",
     "LICENSE"
   ],
