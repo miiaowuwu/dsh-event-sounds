@@ -4,6 +4,62 @@ DSH Web GUI 客户端插件：在对话「**会话结束 / 弹出选项 / 请求
 
 > 🐋 角色引用：本项目为《明日方舟》（Arknights）角色 **安洁莉娜（Angelina）** 的粉丝向自制项目，默认示例音效为安洁莉娜「hirari do～」与「呢？」语音片段，仅供个人学习与娱乐使用，**不用于任何商业用途**。
 
+## 安装（傻瓜式）
+
+按你使用 DSH 的方式二选一，其余全部自动完成。
+
+### 前置要求（缺什么装什么）
+
+| 使用方式 | 需要哪些工具 | 缺了怎么办 |
+|----------|--------------|-----------|
+| **场景一：桌面应用** | 无（脚本用**应用自带的 pnpm**） | 什么都不用装 |
+| **场景二：`npx @deepseek-ai/dsh web`** | Node.js + pnpm + git | 按下面表格装 |
+
+**场景二缺工具时的安装方法（Windows）：**
+
+| 工具 | 用途 | 安装方法 | 验证 |
+|------|------|----------|------|
+| Node.js | 运行 npx / pnpm | `winget install OpenJS.NodeJS.LTS`，或到 https://nodejs.org 下载安装包 | `node -v` |
+| pnpm | dsh plugin 依赖的包管理器 | 装好 Node 后执行 `npm i -g pnpm`（或 `corepack enable pnpm`） | `pnpm -v` |
+| git | 从 GitHub 安装插件 | `winget install Git.Git`，或到 https://git-scm.com 下载 | `git --version` |
+
+> 提示：安装完新工具后**重开一个终端**再执行安装命令，否则 PATH 不生效。
+
+### 场景一：使用桌面应用（DeepSeek Harness Desktop）—— 推荐
+
+> 无需安装 node / pnpm，脚本用应用自带的运行时，全程自动化。
+
+1. 打开本文件夹 `dsh-event-sounds/`
+2. 右键 [install.ps1](install.ps1) →「使用 PowerShell 运行」
+   - 或在 PowerShell 中执行：`& "D:\你的路径\dsh-event-sounds\install.ps1"`
+3. 看到绿色「安装完成」后，**重启 DeepSeek Harness Desktop** 即可
+
+脚本会自动完成：登记插件到 `%USERPROFILE%\.dsh\profiles\desktop` 的 `dependencies` 与 `bundles` → 用应用自带的 pnpm 安装依赖。可重复执行，不会重复登记。
+
+### 场景二：使用 `npx @deepseek-ai/dsh web`
+
+需要全局 node + pnpm + git（缺什么见上面的前置表格）：
+
+```bash
+# 安装（二选一：GitHub 或本地路径）
+npx @deepseek-ai/dsh plugin --profile web add github:miiaowuwu/dsh-event-sounds
+# npx @deepseek-ai/dsh plugin --profile web add link:D:/你的路径/dsh-event-sounds
+
+# 启动 web（装完重启即生效）
+npx @deepseek-ai/dsh web
+```
+
+> `dsh plugin` 会自动把声明了 `dsh.bundle` 的插件登记进 profile 的 `bundles` 列表，无需手动改配置。
+>
+> 提示：国内网络访问 GitHub 不稳定，如果 `github:` 安装报 `ECONNRESET` / `ETIMEDOUT` 超时，改用**本地路径**安装即可（把插件文件夹下载/放在本地后）：
+> `npx @deepseek-ai/dsh plugin --profile web add link:D:/你的路径/dsh-event-sounds`
+
+### 安装成功标志 & 更新 / 卸载
+
+- **成功标志**：Web 界面右上角短暂显示绿色「dsh-event-sounds 已加载」提示，并出现 🔊 悬浮球
+- **更新**：桌面应用场景重新运行 `install.ps1` 后重启；web 场景执行 `npx @deepseek-ai/dsh plugin --profile web update dsh-client-ui-event-sounds`
+- **卸载**：桌面应用场景右键运行 `uninstall.ps1` 后重启；web 场景执行 `npx @deepseek-ai/dsh plugin --profile web remove dsh-client-ui-event-sounds`
+
 ## 功能
 
 - **可拖动悬浮球**（🔊）：按住拖到屏幕任意位置；**拖到屏幕边缘自动缩成「只有 > 图标」的小半球**；点击打开配置弹窗；位置持久化，默认靠左
@@ -23,6 +79,8 @@ DSH Web GUI 客户端插件：在对话「**会话结束 / 弹出选项 / 请求
 dsh-event-sounds/
 ├── package.json        # 包声明（dsh.client / dsh.bundle.patch）
 ├── cordis.patch.yml    # 组成补丁：挂载行 ui-event-sounds
+├── install.ps1         # ★ 傻瓜式安装脚本（桌面应用，右键运行）
+├── uninstall.ps1       # ★ 卸载脚本（删除安装，右键运行）
 ├── README.md
 ├── LICENSE
 ├── sounds/             # ★ 把音频文件放这里（mp3/wav/ogg 等）
@@ -42,34 +100,6 @@ dsh-event-sounds/
 
 - `dsh.client` 声明（`exports "./client"`）→ 驱动浏览器端在 Web GUI 加载
 - `dsh.bundle.patch`（[cordis.patch.yml](cordis.patch.yml)）→ 驱动宿主端在 DSH 主进程注册
-
-## 安装
-
-### 前置要求
-
-- 已安装 DSH 桌面端（提供 `dsh` CLI）
-- 本插件为 **热插拔** 插件：无需改动 DSH 源码，安装后重启 DSH 桌面端即可生效
-
-### 方式一：从 GitHub 安装（推荐）
-
-```bash
-dsh plugin --profile desktop add github:miiaowuwu/dsh-event-sounds
-```
-
-安装完成后**重启 DSH 桌面端**，浏览器界面右上角会短暂显示绿色「dsh-event-sounds 已加载」提示，并出现 🔊 悬浮球即表示安装成功。
-
-更新插件：
-
-```bash
-dsh plugin --profile desktop update dsh-event-sounds
-```
-
-### 方式二：手动挂载（本地开发 / 离线使用）
-
-1. 将本目录链接到 DSH profile 的 `node_modules/dsh-client-ui-event-sounds`
-2. 在 profile 的 `package.json` 的 `dependencies` 与 `dsh.profile.bundles` 中登记
-3. 执行 `pnpm install`
-4. 重启 DSH 桌面端
 
 ## 使用
 
