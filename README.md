@@ -8,27 +8,30 @@ A DSH Web GUI client plugin: plays a chosen sound effect when the conversation *
 
 ## Install
 
-**DeepSeek Harness Desktop users (recommended — no dependencies needed):**
+Both methods work for **either** user type — Desktop users and `npx dsh web` users can use whichever they prefer.
 
-1. **Quit the desktop app**
-2. From [Releases](https://github.com/miiaowuwu/dsh-event-sounds/releases) download [dsh-event-sounds-Setup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-Setup-1.1.0-x64.exe) and **double-click it**
-3. **Restart the app** — the 🔊 floating ball means it's installed
+**Option A — Setup installer (recommended, zero dependencies, works for both):**
+
+1. **Quit the running dsh** (the Desktop app or the `dsh web` server)
+2. Download [dsh-event-sounds-Setup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-Setup-1.1.0-x64.exe) and **double-click it**
+3. **Restart** — the 🔊 floating ball means it's installed
 
 The installer deploys the plugin to `$DSH_HOME/plugins/dsh-client-ui-event-sounds` and registers it into **every initialized profile** (web, desktop, …) via the official `dsh plugin` command, so all profiles share the same copy. If no dsh CLI is found, it auto-detects one (desktop bundled runtime → system npx → downloads Node.js). Fully automated, no manual config edits.
 
-- **Update**: run the Setup exe again and restart the app
-- **Uninstall**: double-click [dsh-event-sounds-UnSetup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.1.0-x64.exe) and restart the app
+- **Update**: run the Setup exe again and restart
+- **Uninstall**: double-click [dsh-event-sounds-UnSetup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.1.0-x64.exe) and restart
 
-**`npx @deepseek-ai/dsh web` users (need Node.js):**
+**Option B — dsh CLI (needs Node.js, works for both):**
 
 ```bash
-npx @deepseek-ai/dsh plugin --profile web add github:miiaowuwu/dsh-event-sounds
+npx @deepseek-ai/dsh plugin --profile desktop add github:miiaowuwu/dsh-event-sounds   # Desktop users
+npx @deepseek-ai/dsh plugin --profile web add github:miiaowuwu/dsh-event-sounds      # web users
 npx @deepseek-ai/dsh web
 ```
 
-> If GitHub is unstable in your region, install from a local path instead: `npx @deepseek-ai/dsh plugin --profile web add link:D:/your/path/dsh-event-sounds`
+> If GitHub is unstable in your region, install from a local path instead: `npx @deepseek-ai/dsh plugin --profile <name> add link:D:/your/path/dsh-event-sounds`
 >
-> Development convenience: `npm run setup` auto-detects all local profiles and registers this plugin into each of them; `npm run setup:deploy` deploys a copy to `$DSH_HOME/plugins` and points every profile at it (release/fixed-use mode). Add `--profile <name>` (e.g. `node tools/install.mjs --profile web --unify`) to operate on a single profile only — so desktop can stay on the deployed copy while web points at your dev directory.
+> Development convenience: `npm run setup` auto-detects all local profiles and registers this plugin into each of them; `npm run setup:deploy` deploys a copy to `$DSH_HOME/plugins` and points every profile at it (release/fixed-use mode). Add `--profile <name>` (e.g. `node tools/install.mjs --profile web --unify`) to operate on a single profile only.
 
 ## Features
 
