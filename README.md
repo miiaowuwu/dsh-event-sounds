@@ -6,60 +6,27 @@ DSH Web GUI 客户端插件：在对话「**会话结束 / 弹出选项 / 请求
 
 ## 安装
 
-按你使用 DSH 的方式二选一，其余全部自动完成。
+**DeepSeek Harness Desktop 用户（推荐，无需安装任何依赖）：**
 
-### 前置要求（缺什么装什么）
+1. **退出桌面应用**
+2. 从 [Releases](https://github.com/miiaowuwu/dsh-event-sounds/releases) 下载 [dsh-event-sounds-Setup-1.0.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-Setup-1.0.0-x64.exe)，**双击**
+3. **重启应用**，看到 🔊 悬浮球即安装成功
 
-| 使用方式 | 需要哪些工具 | 缺了怎么办 |
-|----------|--------------|-----------|
-| **场景一：桌面应用** | 无（脚本用**应用自带的 pnpm**） | 什么都不用装 |
-| **场景二：`npx @deepseek-ai/dsh web`** | Node.js + pnpm + git | 按下面表格装 |
+安装器复用应用自带运行时调用官方 `dsh plugin` 命令登记插件，全程自动化，不手改任何配置。
 
-**场景二缺工具时的安装方法（Windows）：**
+- **更新**：重新双击 Setup exe 并重启应用
+- **卸载**：双击 [dsh-event-sounds-UnSetup-1.0.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.0.0-x64.exe) 并重启应用
 
-| 工具 | 用途 | 安装方法 | 验证 |
-|------|------|----------|------|
-| Node.js | 运行 npx / pnpm | `winget install OpenJS.NodeJS.LTS`，或到 https://nodejs.org 下载安装包 | `node -v` |
-| pnpm | dsh plugin 依赖的包管理器 | 装好 Node 后执行 `npm i -g pnpm`（或 `corepack enable pnpm`） | `pnpm -v` |
-| git | 从 GitHub 安装插件 | `winget install Git.Git`，或到 https://git-scm.com 下载 | `git --version` |
-
-> 提示：安装完新工具后**重开一个终端**再执行安装命令，否则 PATH 不生效。
-
-### 场景一：使用桌面应用（DeepSeek Harness Desktop）—— 推荐
-
-> 无需安装 node / pnpm，安装包用应用自带的运行时，全程自动化。
-
-1. **先退出 DeepSeek Harness Desktop**（安装/卸载时应用不应处于运行状态）
-2. **从 [Releases](https://github.com/miiaowuwu/dsh-event-sounds/releases) 下载 [dsh-event-sounds-Setup-1.0.0-x64.exe](#)，双击即装**（自包含单文件，内嵌全部插件文件，解压到 `%LOCALAPPDATA%\dsh-event-sounds`）
-3. 看到绿色「安装完成」后，**重启 DeepSeek Harness Desktop** 即可
-
-安装器会自动完成：复用桌面应用自带的 exe（`ELECTRON_RUN_AS_NODE` 模式，当作通用 Node 运行时）调用**官方 `dsh plugin --profile desktop add link:<插件路径>`**，由官方 CLI 自动登记 `dependencies` + `bundles` 并用应用自带的 pnpm 安装依赖——不手改任何配置。可重复执行。
-
-### 场景二：使用 `npx @deepseek-ai/dsh web`
-
-需要全局 node + pnpm + git（缺什么见上面的前置表格）：
+**`npx @deepseek-ai/dsh web` 用户（需 Node.js + pnpm + git）：**
 
 ```bash
-# 安装（二选一：GitHub 或本地路径）
 npx @deepseek-ai/dsh plugin --profile web add github:miiaowuwu/dsh-event-sounds
-# npx @deepseek-ai/dsh plugin --profile web add link:D:/你的路径/dsh-event-sounds
-
-# 启动 web（装完重启即生效）
 npx @deepseek-ai/dsh web
 ```
 
-> `dsh plugin` 会自动把声明了 `dsh.bundle` 的插件登记进 profile 的 `bundles` 列表，无需手动改配置。
+> GitHub 访问不稳定时改用本地路径安装：`npx @deepseek-ai/dsh plugin --profile web add link:D:/你的路径/dsh-event-sounds`
 >
-> 提示：国内网络访问 GitHub 不稳定，如果 `github:` 安装报 `ECONNRESET` / `ETIMEDOUT` 超时，改用**本地路径**安装即可（把插件文件夹下载/放在本地后）：
-> `npx @deepseek-ai/dsh plugin --profile web add link:D:/你的路径/dsh-event-sounds`
-
-### 安装成功标志 & 更新 / 卸载
-
-- **成功标志**：Web 界面右上角短暂显示绿色「dsh-event-sounds 已加载」提示，并出现悬浮球
-- **更新**：桌面应用场景重新双击 `dsh-event-sounds-Setup-1.0.0-x64.exe` 后重启；web 场景执行 `npx @deepseek-ai/dsh plugin --profile web update dsh-client-ui-event-sounds`
-- **卸载**：桌面应用场景双击 `dsh-event-sounds-UnSetup-1.0.0-x64.exe` 后重启；web 场景执行 `npx @deepseek-ai/dsh plugin --profile web remove dsh-client-ui-event-sounds`
-
-> **重新生成发布 exe**：先 `Install-Module ps2exe -Scope CurrentUser`（仅首次），再执行 `& releases\build-single-exe.ps1`，产物生成到 `releases\<版本>\`。详细说明见 `releases/<版本>/resources/BUILD.md`；版本/架构在脚本顶部修改。
+> 重新生成发布 exe：`Install-Module ps2exe -Scope CurrentUser`（仅首次）后执行 `& releases\build-single-exe.ps1`，产物生成到 `releases\<版本>\`。
 
 ## 功能
 
@@ -78,20 +45,16 @@ npx @deepseek-ai/dsh web
 
 ```
 dsh-event-sounds/
-├── package.json        # 包声明（dsh.client / dsh.bundle.patch）
-├── cordis.patch.yml    # 组成补丁：挂载行 ui-event-sounds
+├── package.json          # 包声明（dsh.client / dsh.bundle.patch）
+├── cordis.patch.yml      # 组成补丁：挂载行 ui-event-sounds
 ├── README.md
 ├── LICENSE
-├── sounds/             # ★ 把音频文件放这里（mp3/wav/ogg 等）
+├── sounds/               # ★ 把音频文件放这里（mp3/wav/ogg 等）
 ├── lib/
-│   ├── index.js        # 宿主端：/dsh-sounds-control 静态服务（list/config/音频）
-│   └── client.js       # 浏览器端：悬浮球 + 配置弹窗 + 触发监测 + 播放
-└── releases/           # ★ 发布目录
-    ├── build-single-exe.ps1              # ★ 生成发布 exe 的构建脚本
-    └── 1.0.0/                            # ★ 发布产物（上传到 GitHub Releases）
-        ├── dsh-event-sounds-Setup-1.0.0-x64.exe    # 自包含安装器（双击安装）
-        ├── dsh-event-sounds-UnSetup-1.0.0-x64.exe  # 自包含卸载器（双击卸载）
-        └── resources/BUILD.md            # 构建说明（如何重新生成 exe）
+│   ├── index.js          # 宿主端：/dsh-sounds-control 静态服务（list/config/音频）
+│   └── client.js         # 浏览器端：悬浮球 + 配置弹窗 + 触发监测 + 播放
+└── releases/             # ★ 发布目录：构建脚本（Setup/UnSetup exe 产物见 GitHub Releases）
+    └── build-single-exe.ps1    # 生成自包含安装/卸载 exe
 ```
 
 ## 双端结构
