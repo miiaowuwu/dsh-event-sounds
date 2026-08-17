@@ -11,15 +11,15 @@ A DSH Web GUI client plugin: plays a chosen sound effect when the conversation *
 **DeepSeek Harness Desktop users (recommended — no dependencies needed):**
 
 1. **Quit the desktop app**
-2. From [Releases](https://github.com/miiaowuwu/dsh-event-sounds/releases) download [dsh-event-sounds-Setup-1.0.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-Setup-1.0.0-x64.exe) and **double-click it**
+2. From [Releases](https://github.com/miiaowuwu/dsh-event-sounds/releases) download [dsh-event-sounds-Setup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-Setup-1.1.0-x64.exe) and **double-click it**
 3. **Restart the app** — the 🔊 floating ball means it's installed
 
-The installer calls the official `dsh plugin` command using the app's bundled runtime. Fully automated, no manual config edits.
+The installer deploys the plugin to `$DSH_HOME/plugins/dsh-client-ui-event-sounds` and registers it into **every initialized profile** (web, desktop, …) via the official `dsh plugin` command, so all profiles share the same copy. If no dsh CLI is found, it auto-detects one (desktop bundled runtime → system npx → downloads Node.js). Fully automated, no manual config edits.
 
 - **Update**: run the Setup exe again and restart the app
-- **Uninstall**: double-click [dsh-event-sounds-UnSetup-1.0.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.0.0-x64.exe) and restart the app
+- **Uninstall**: double-click [dsh-event-sounds-UnSetup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.1.0-x64.exe) and restart the app
 
-**`npx @deepseek-ai/dsh web` users (need Node.js + pnpm + git):**
+**`npx @deepseek-ai/dsh web` users (need Node.js):**
 
 ```bash
 npx @deepseek-ai/dsh plugin --profile web add github:miiaowuwu/dsh-event-sounds
@@ -27,32 +27,44 @@ npx @deepseek-ai/dsh web
 ```
 
 > If GitHub is unstable in your region, install from a local path instead: `npx @deepseek-ai/dsh plugin --profile web add link:D:/your/path/dsh-event-sounds`
+>
+> Development convenience: `npm run setup` auto-detects all local profiles and registers this plugin into each of them; `npm run setup:deploy` deploys a copy to `$DSH_HOME/plugins` and points every profile at it (release/fixed-use mode).
 
 ## Features
 
 - **Draggable floating ball** (🔊): drag it anywhere on screen; **dragging it to a screen edge collapses it into a small half-ball (a ">" icon only)**; click to open the settings dialog; position is persisted, defaults to the left side
 - **Settings dialog**: draggable (grab the title bar), z-index on top
-  - 4 trigger conditions: **session end / options popup / permission request / stop**, each with an independent 【enable checkbox + sound dropdown】
-  - **Appearance**: Whale Girl (default) / Pure White / Pure Black
-  - Volume slider (0–100%), ▶ test playback + status bar, reset button position
-  - Sound library (local audio in the plugin `sounds/` folder) + refresh
+  - 4 trigger conditions: **session end / options popup / permission request / stop**, each with an independent 【enable checkbox + sound dropdown】offering **built-in chime / no sound / a specific sound** ("built-in chime" is a Web Audio arpeggio — no audio file required)
+  - **Attention events** (options popup / permission request) always ring — they play as soon as they appear, regardless of the conversation's running/viewing state, and take priority over the completion sounds
+  - **Appearance**: Whale Girl (default) / Pure White / Pure Black, plus a **customizable voice name**
+  - Volume slider (0–100%), **test sound** dropdown (incl. a "built-in chime" option) + ▶ preview + status bar, reset button position
+  - Sound library (local audio in the plugin `sounds/` folder) + refresh + **Custom dialog: pick/drag-drop upload, delete sounds, restore hidden bundled sounds**
 - **Sound source**: local audio files in the plugin `sounds/` directory (mp3/wav/ogg/m4a/flac/opus/aac/wma/webm), served by the host side via the `/dsh-sounds-control` static server (Range/206 chunking, ETag, streaming)
-- **Persistent config**: dual-write to localStorage + host-side `config.json`, survives restarts
+- **Persistent config**: dual-write to localStorage + host-side `config.json`, survives restarts; every field is sanitized (type/range/enum) on load, bad values fall back to defaults
 - **Preload on startup**: fetches config and sound list and buffers the configured sound when the app opens, so the first play is instant
+- Defaults: volume 75%; session end →「hirari do～」, options popup / permission request →「呢？」, stop → built-in chime
 - Falls back to a Web Audio built-in beep when no sound is selected or loading fails
+- **Dev tooling**: `npm test` (Node smoke tests for host-side list/config/upload/delete and browser-side logic), `npm run setup` / `setup:fix` / `setup:deploy` (multi-profile auto-config), `releases/build-single-exe.ps1` (builds the Setup/UnSetup installers)
 
 ## Directory structure
 
 ```
 dsh-event-sounds/
-├── package.json          # Package manifest (dsh.client / dsh.bundle.patch)
+├── package.json          # Package manifest (dsh.client / dsh.bundle.patch / types / scripts)
 ├── cordis.patch.yml      # Composition patch: mounts line ui-event-sounds
+├── CHANGELOG.md          # Version history
 ├── README.md
 ├── LICENSE
-├── sounds/               # ★ Put your audio files here (mp3/wav/ogg etc.)
+├── sounds/               # Dev: put your audio files here (mp3/wav/ogg etc.)
 ├── lib/
 │   ├── index.js          # Host side: /dsh-sounds-control static server (list/config/audio)
-│   └── client.js         # Browser side: floating ball + settings dialog + trigger detection + playback
+│   ├── client.js         # Browser side: floating ball + settings dialog + trigger detection + playback
+│   └── types/index.d.ts  # Type declarations
+├── tools/
+│   ├── install.mjs       # Multi-profile auto-config (setup / --fix / --unify / --deploy)
+│   ├── test-host.mjs     # Host-side API smoke tests (list/config/upload/delete)
+│   └── test-client.mjs   # Browser-side logic smoke tests
+└── releases/             # Publishing: build-single-exe.ps1 + versioned Setup/UnSetup exe (not in repo)
 ```
 
 ## Dual-side structure
@@ -67,13 +79,15 @@ Mounting of both halves is driven by `package.json` — no separate install need
 - `dsh.client` declaration (`exports "./client"`) → loads the browser side in the Web GUI
 - `dsh.bundle.patch` ([cordis.patch.yml](cordis.patch.yml)) → registers the host side in the DSH main process
 
+Because dsh plugins are isolated **per profile** (`$DSH_HOME/profiles/<name>` each has its own `package.json` / `node_modules`), a plugin must be registered in every profile you want it in — that's what the installer and `tools/install.mjs` automate (see [Install](#install)).
+
 ## Usage
 
-1. **Add sounds**: put audio files in the `sounds/` folder at the plugin root (mp3/wav/ogg/m4a/flac/opus/aac/wma/webm supported), e.g. Angelina's "hirari do～" and "Huh?" clips
+1. **Add sounds**: during development, put audio files in the repo `sounds/` folder (see the directory tree above). When installed, there is no need to hunt for the folder — open the settings dialog → Sound library → **Custom**, then pick a local file or drag & drop to import (it is copied into the `sounds/` folder of the install location automatically). You can also delete sounds from the list (bundled sounds are hidden, restorable anytime).
 2. **Open the settings dialog**: click the 🔊 floating ball
 3. **Refresh the sound list**: click "Refresh"; the plugin enumerates all audio files under `sounds/`
-4. **Configure triggers**: for the four events (session end / options popup / permission request / stop), set 【enable + sound】independently
-5. **Test playback**: click ▶ to verify, adjust volume with the slider (0–100%)
+4. **Configure triggers**: for the four events (session end / options popup / permission request / stop), set 【enable + sound】independently — each dropdown offers "built-in chime / no sound / a specific sound" ("built-in chime" is a Web Audio arpeggio — no audio file required)
+5. **Test sound**: pick one in the "Test sound" dropdown (which includes a "built-in chime" option) and click ▶ to preview; selecting "built-in chime" or nothing previews the Web Audio arpeggio. Adjust volume with the slider (0–100%)
 6. **In effect**: the chosen sound plays automatically on matching events; a built-in beep plays as a fallback when nothing is selected or loading fails
 
 > Tip: drag the floating ball anywhere; it collapses into a half-ball at screen edges; switch between Whale Girl / Pure White / Pure Black under "Appearance"; position and config are saved automatically and survive restarts.

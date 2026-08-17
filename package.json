@@ -1,12 +1,18 @@
 {
   "name": "dsh-client-ui-event-sounds",
   "description": "DSH Web GUI 语音控制插件：对话「会话结束 / 弹出选项 / 请求许可 / 停止」时播放指定音效；可拖动悬浮球（靠边缩成半球）、可移动置顶配置弹窗；音效来自插件包 sounds/ 文件夹的本地音频；支持鲸鱼娘/纯白/纯黑三种外观；配置自动保存（浏览器 + 宿主 config.json 双持久化）；启动即预加载。Hot-pluggable — mounted via dsh plugin add + cordis.patch.yml, no dsh source changes.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "main": "lib/index.js",
+  "types": "./lib/types/index.d.ts",
   "exports": {
-    ".": "./lib/index.js",
-    "./client": "./lib/client.js",
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
     "./package.json": "./package.json"
   },
   "files": [
@@ -14,8 +20,21 @@
     "sounds",
     "cordis.patch.yml",
     "README.md",
-    "LICENSE"
+    "README.zh.md",
+    "LICENSE",
+    "CHANGELOG.md"
   ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "scripts": {
+    "test": "node tools/test-host.mjs && node tools/test-client.mjs",
+    "check": "node --check lib/index.js && node --check lib/client.js",
+    "setup": "node tools/install.mjs",
+    "setup:fix": "node tools/install.mjs --fix",
+    "setup:deploy": "node tools/install.mjs --deploy"
+  },
   "keywords": [
     "dsh",
     "dsh-plugin",
@@ -38,7 +57,8 @@
     }
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": "^18.2.0",
+    "@deepseek-ai/cordis": "^4.0.1"
   },
   "license": "MIT",
   "repository": {
