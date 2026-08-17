@@ -2,25 +2,27 @@
 # build-single-exe.ps1 —— 生成自包含单文件安装/卸载器（releases 发布用）
 #
 # 用法：
-#   右键本文件 ->「使用 PowerShell 运行」，或  & build-single-exe.ps1
+#   右键本文件 ->「使用 PowerShell 运行」，或  & releases\build-single-exe.ps1
 #
-# 产物（自动同步到 releases\<版本>\）：
+# 产物（生成到本目录下的 <版本>\）：
 #   dsh-event-sounds-Setup-1.0.0-x64.exe    双击 = 安装（内嵌全部插件文件）
 #   dsh-event-sounds-UnSetup-1.0.0-x64.exe  双击 = 卸载
 #   两个 exe 由同一份脚本编译，运行时会按自身文件名自动判断模式。
 #
-# 原理：把插件包运行所需的全部文件以 base64 内嵌进 exe，安装时解压到
-#   %LOCALAPPDATA%\dsh-event-sounds，再调用官方 dsh CLI 安装。
+# 原理：本脚本位于 releases\ 下，自动读取上一级插件包目录的全部运行文件，
+#   以 base64 内嵌进 exe；安装时解压到 %LOCALAPPDATA%\dsh-event-sounds，
+#   再调用官方 dsh CLI 安装。
 # 前置：已安装 ps2exe（Install-Module ps2exe -Scope CurrentUser -Force）
 # =============================================================
 $ErrorActionPreference = "Stop"
 
-$pkgDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path   # releases\
+$pkgDir    = Split-Path -Parent $scriptDir                    # 插件包根目录（releases 的上一级）
 
 # ---- 版本与架构（改这里即可重新打包）----
 $releaseVersion = "1.0.0"
 $arch          = "x64"
-$releaseDir    = Join-Path $pkgDir "releases\$releaseVersion"
+$releaseDir    = Join-Path $scriptDir $releaseVersion
 $setupExeName  = "dsh-event-sounds-Setup-$releaseVersion-$arch.exe"
 $unsetupExeName = "dsh-event-sounds-UnSetup-$releaseVersion-$arch.exe"
 
@@ -166,7 +168,7 @@ if (-not $PSScriptRoot) { Read-Host "按回车键退出" }
 
 Write-Host "[2/3] 生成 dsh-event-sounds.install.ps1 ..."
 $generated = $header + "`r`n" + ($dataLines -join "`r`n") + "`r`n" + $footer
-$genPath = Join-Path $pkgDir "dsh-event-sounds.install.ps1"
+$genPath = Join-Path $scriptDir "dsh-event-sounds.install.ps1"
 [System.IO.File]::WriteAllText($genPath, $generated, (New-Object System.Text.UTF8Encoding($true)))
 
 Write-Host "[3/3] 编译 exe ..."

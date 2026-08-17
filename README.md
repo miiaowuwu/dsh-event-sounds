@@ -59,7 +59,7 @@ npx @deepseek-ai/dsh web
 - **更新**：桌面应用场景重新双击 `dsh-event-sounds-Setup-1.0.0-x64.exe` 后重启；web 场景执行 `npx @deepseek-ai/dsh plugin --profile web update dsh-client-ui-event-sounds`
 - **卸载**：桌面应用场景双击 `dsh-event-sounds-UnSetup-1.0.0-x64.exe` 后重启；web 场景执行 `npx @deepseek-ai/dsh plugin --profile web remove dsh-client-ui-event-sounds`
 
-> **重新生成发布 exe**：先 `Install-Module ps2exe -Scope CurrentUser`（仅首次），再执行 `& build-single-exe.ps1`，产物自动同步到 `releases\<版本>\`。详细说明见 `releases/<版本>/resources/BUILD.md`；版本/架构在脚本顶部修改。
+> **重新生成发布 exe**：先 `Install-Module ps2exe -Scope CurrentUser`（仅首次），再执行 `& releases\build-single-exe.ps1`，产物生成到 `releases\<版本>\`。详细说明见 `releases/<版本>/resources/BUILD.md`；版本/架构在脚本顶部修改。
 
 ## 功能
 
@@ -80,18 +80,18 @@ npx @deepseek-ai/dsh web
 dsh-event-sounds/
 ├── package.json        # 包声明（dsh.client / dsh.bundle.patch）
 ├── cordis.patch.yml    # 组成补丁：挂载行 ui-event-sounds
-├── build-single-exe.ps1# ★ 生成发布 exe 的构建脚本（产物进 releases\<版本>\）
 ├── README.md
 ├── LICENSE
 ├── sounds/             # ★ 把音频文件放这里（mp3/wav/ogg 等）
 ├── lib/
 │   ├── index.js        # 宿主端：/dsh-sounds-control 静态服务（list/config/音频）
 │   └── client.js       # 浏览器端：悬浮球 + 配置弹窗 + 触发监测 + 播放
-└── releases/
-    └── 1.0.0/           # ★ 发布产物（上传到 GitHub Releases）
+└── releases/           # ★ 发布目录
+    ├── build-single-exe.ps1              # ★ 生成发布 exe 的构建脚本
+    └── 1.0.0/                            # ★ 发布产物（上传到 GitHub Releases）
         ├── dsh-event-sounds-Setup-1.0.0-x64.exe    # 自包含安装器（双击安装）
         ├── dsh-event-sounds-UnSetup-1.0.0-x64.exe  # 自包含卸载器（双击卸载）
-        └── resources/BUILD.md                    # 构建说明（如何重新生成 exe）
+        └── resources/BUILD.md            # 构建说明（如何重新生成 exe）
 ```
 
 ## 双端结构
