@@ -21,7 +21,7 @@ DSH Web GUI 客户端插件：在对话「**会话结束 / 弹出选项 / 请求
 
 > 说明（仅了解原理，无需任何操作）：安装器把插件部署到 `$DSH_HOME\plugins\dsh-client-ui-event-sounds`，并扫描 `$DSH_HOME\profiles` 下**所有已初始化的 profile**（web / desktop / …）逐一调用官方 `dsh plugin` 命令登记，使各 profile 共用同一份部署副本；若本机没有 dsh CLI，会自动穷举补齐（桌面应用自带 runtime → 系统 npx → 自动下载 Node.js）。安装完成后**自动重启 dsh**：桌面版像双击软件一样打开（无终端窗口，关闭安装器窗口不影响）；web 版在后台常驻启动，并自动打开浏览器跳转页面。全程自动化，不手改任何配置。
 
-**方式二：dsh CLI（需 Node.js，两种用户都可用；如需安装后自动重启，推荐方式一）**
+**方式二：dsh CLI（需 Node.js，两种用户都可用）**
 
 > 如果 dsh 尚未运行，请先启动一次（`npx @deepseek-ai/dsh web`），完成 profile 初始化，再进行安装。
 > 尚未安装 dsh？下载 DeepSeek Harness 桌面版，或安装 Node.js（https://nodejs.org）后运行 `npx @deepseek-ai/dsh web`。
@@ -38,14 +38,12 @@ npx @deepseek-ai/dsh plugin --profile desktop add dsh-client-ui-event-sounds --c
 npx @deepseek-ai/dsh plugin --profile web add dsh-client-ui-event-sounds --config.minimumReleaseAge=0
 ```
 
-然后**自行启动/重启 dsh**（add 命令只登记插件，**不会自动启动**）——桌面版直接打开 DeepSeek Harness 桌面应用；web 版运行：
+然后**重启** dsh（若尚未启动则直接启动）：
 
 ```bash
 npx @deepseek-ai/dsh web
 ```
 
-> 命令中的 `dsh-client-ui-event-sounds` 是 **npm 包名**（走 npm registry 安装，无需直连 GitHub）；末尾的 `--config.minimumReleaseAge=0` 用于绕过 pnpm 供应链闸门（报 `minimumReleaseAge` 错误时）。
->
 > 开发便利：`npm run setup` 自动检测本机所有 profile 并逐一登记本插件；`npm run setup:deploy` 把副本部署到 `$DSH_HOME/plugins` 并让所有 profile 指向它（发布/固定使用模式）。加 `--profile <name>`（如 `node tools/install.mjs --profile web --unify`）可只操作单个 profile；`node tools/install.mjs --npm --start` 以 npm 包方式安装并在完成后自动启动对应端（desktop 弹应用窗口 / web 启动并自动打开浏览器）。
 
 ## 功能

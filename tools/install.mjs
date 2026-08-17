@@ -305,8 +305,8 @@ for (const s of summary) {
 }
 console.log(failures === 0 ? "全部完成" : failures + " 处失败");
 
-// --start：配置完成后自动启动对应端（本次配置过的 profile 优先；全为已配置时启动第一个）
-if (START && failures === 0) {
+// --start：配置完成后自动启动对应端（dry-run 只预览，不启动；本次配置过的 profile 优先；全为已配置时启动第一个）
+if (START && !DRY && failures === 0) {
   const touched = summary.filter((s) => ["add", "fix", "unify"].includes(s.state));
   const targets = touched.length ? touched : summary.filter((s) => s.state === "ok").slice(0, 1);
   if (targets.length) {

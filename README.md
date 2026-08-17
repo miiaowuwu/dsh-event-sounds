@@ -21,7 +21,7 @@ Both methods work for **either** user type — Desktop users and `npx dsh web` u
 
 > Note (just how it works — no action needed): the installer deploys the plugin to `$DSH_HOME/plugins/dsh-client-ui-event-sounds` and registers it into **every initialized profile** (web, desktop, …) via the official `dsh plugin` command, so all profiles share the same copy. If no dsh CLI is found, it auto-detects one (desktop bundled runtime → system npx → downloads Node.js). On finish it **restarts dsh automatically**: Desktop launches exactly like double-clicking the app (no terminal window, unaffected by closing the installer); web runs in the background and your browser opens the page automatically. Fully automated, no manual config edits.
 
-**Option B — dsh CLI (needs Node.js, works for both; prefer Option A if you want auto-restart after install):**
+**Option B — dsh CLI (needs Node.js, works for both):**
 
 > If dsh isn't running yet, start it once first (`npx @deepseek-ai/dsh web`) so its profiles get initialized.
 > Don't have dsh yet? Download the DeepSeek Harness Desktop app, or install Node.js (https://nodejs.org) and run `npx @deepseek-ai/dsh web`.
@@ -38,14 +38,12 @@ npx @deepseek-ai/dsh plugin --profile desktop add dsh-client-ui-event-sounds --c
 npx @deepseek-ai/dsh plugin --profile web add dsh-client-ui-event-sounds --config.minimumReleaseAge=0
 ```
 
-Then **restart** dsh yourself (the add command does **not** auto-start dsh) — Desktop users: open the DeepSeek Harness app; web users: run
+Then **restart** dsh (or just start it if it isn't running):
 
 ```bash
 npx @deepseek-ai/dsh web
 ```
 
-> `dsh-client-ui-event-sounds` is the **npm package name** (installed from the npm registry — no direct GitHub connection needed); the trailing `--config.minimumReleaseAge=0` bypasses pnpm's supply-chain gate (when you hit `minimumReleaseAge` errors).
->
 > Development convenience: `npm run setup` auto-detects all local profiles and registers this plugin into each of them; `npm run setup:deploy` deploys a copy to `$DSH_HOME/plugins` and points every profile at it (release/fixed-use mode). Add `--profile <name>` (e.g. `node tools/install.mjs --profile web --unify`) to operate on a single profile only; `node tools/install.mjs --npm --start` installs from the npm package and auto-starts the matching side when done (Desktop window for desktop / web service + browser for web).
 
 ## Features
