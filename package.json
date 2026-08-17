@@ -1,0 +1,45 @@
+{
+  "name": "dsh-client-ui-sounds-control",
+  "description": "DSH Web GUI 语音控制插件：对话「会话结束 / 弹出选项 / 请求许可 / 停止」时播放指定音效；可拖动悬浮球（靠边缩成半球）、可移动置顶配置弹窗；音效来自插件包 sounds/ 文件夹的本地音频；支持鲸鱼娘/纯白/纯黑三种外观；配置自动保存（浏览器 + 宿主 config.json 双持久化）；启动即预加载。Hot-pluggable — mounted via dsh plugin add + cordis.patch.yml, no dsh source changes.",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "sounds/README.txt",
+    "sounds/hirari-do-demo.wav",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "web-ui",
+    "audio",
+    "sound",
+    "voice-line",
+    "angelina",
+    "arknights"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime"
+      ],
+      "platform": "web"
+    }
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  },
+  "license": "MIT"
+}
