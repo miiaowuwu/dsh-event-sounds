@@ -45,7 +45,7 @@ npx @deepseek-ai/dsh web
 
 > 命令中的 `dsh-client-ui-event-sounds` 是 **npm 包名**（走 npm registry 安装，无需直连 GitHub）；末尾的 `--config.minimumReleaseAge=0` 用于绕过 pnpm 供应链闸门（报 `minimumReleaseAge` 错误时）。
 >
-> 开发便利：`npm run setup` 自动检测本机所有 profile 并逐一登记本插件；`npm run setup:deploy` 把副本部署到 `$DSH_HOME/plugins` 并让所有 profile 指向它（发布/固定使用模式）。加 `--profile <name>`（如 `node tools/install.mjs --profile web --unify`）可只操作单个 profile。
+> 开发便利：`npm run setup` 自动检测本机所有 profile 并逐一登记本插件；`npm run setup:deploy` 把副本部署到 `$DSH_HOME/plugins` 并让所有 profile 指向它（发布/固定使用模式）。加 `--profile <name>`（如 `node tools/install.mjs --profile web --unify`）可只操作单个 profile；`node tools/install.mjs --npm --start` 以 npm 包方式安装并在完成后自动启动对应端（desktop 弹应用窗口 / web 启动并自动打开浏览器）。
 
 ## 功能
 

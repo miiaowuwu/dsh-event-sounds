@@ -45,7 +45,7 @@ npx @deepseek-ai/dsh web
 
 > `dsh-client-ui-event-sounds` is the **npm package name** (installed from the npm registry — no direct GitHub connection needed); the trailing `--config.minimumReleaseAge=0` bypasses pnpm's supply-chain gate (when you hit `minimumReleaseAge` errors).
 >
-> Development convenience: `npm run setup` auto-detects all local profiles and registers this plugin into each of them; `npm run setup:deploy` deploys a copy to `$DSH_HOME/plugins` and points every profile at it (release/fixed-use mode). Add `--profile <name>` (e.g. `node tools/install.mjs --profile web --unify`) to operate on a single profile only.
+> Development convenience: `npm run setup` auto-detects all local profiles and registers this plugin into each of them; `npm run setup:deploy` deploys a copy to `$DSH_HOME/plugins` and points every profile at it (release/fixed-use mode). Add `--profile <name>` (e.g. `node tools/install.mjs --profile web --unify`) to operate on a single profile only; `node tools/install.mjs --npm --start` installs from the npm package and auto-starts the matching side when done (Desktop window for desktop / web service + browser for web).
 
 ## Features
 

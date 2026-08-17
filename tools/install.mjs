@@ -14,7 +14,11 @@
 //   --unify     强制所有 profile 的链接统一指向当前开发目录（桌面版与 web 版共用同一份代码）
 //   --deploy    把插件复制到 $DSH_HOME/plugins/<name>，并把所有 profile 的链接统一指向
 //               部署副本（web 与 desktop 全程走 DSH_HOME 一条路；开发期请用 link 开发目录）
-import { spawnSync } from "node:child_process";
+//   --npm       改用 npm registry 安装（spec = dsh-client-ui-event-sounds，并带
+//               --config.minimumReleaseAge=0 绕过供应链闸门），适用于不依赖 GitHub 直连的发布通道
+//   --start     配置完成后自动启动 dsh：desktop profile → 弹桌面应用窗口；web profile →
+//               后台启动 dsh web 并自动打开浏览器
+import { spawnSync, spawn } from "node:child_process";
 import { readdirSync, existsSync, readFileSync, writeFileSync, realpathSync, statSync, symlinkSync, rmSync, mkdirSync, cpSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -32,6 +36,8 @@ const DRY = args.includes("--dry-run");
 const FIX = args.includes("--fix");
 const UNIFY = args.includes("--unify"); // 强制 profile 链接到目标目录
 const DEPLOY = args.includes("--deploy"); // 部署模式：统一走 DSH_HOME/plugins
+const NPM_MODE = args.includes("--npm"); // npm 源安装（dsh-client-ui-event-sounds），不走 link
+const START = args.includes("--start"); // 配置完成后自动启动 dsh（desktop 弹应用 / web 启动并开浏览器）
 // 仅处理指定 profile（不传则处理全部）：支持「desktop 用 exe 部署、web 用开发目录」这类混合模式
 const profileIdx = args.indexOf("--profile");
 const ONLY = profileIdx !== -1 && args[profileIdx + 1] ? args[profileIdx + 1] : null;
@@ -112,16 +118,23 @@ function forceLink(profileDir, targetDir) {
   symlinkSync(targetDir, linkPath, process.platform === "win32" ? "junction" : "dir");
 }
 
-/** 通过官方命令把插件配置进指定 profile；失败时回退为直接 link 方式 */
+/** 通过官方命令把插件配置进指定 profile；失败时回退为直接 link 方式（仅非 npm 模式） */
 function addToProfile(profile, profileDir) {
   if (DRY) return { done: true, dry: true };
   const cmd = process.platform === "win32" ? "npx.cmd" : "npx";
-  const r = spawnSync(cmd, ["-y", "@deepseek-ai/dsh", "plugin", "--profile", profile, "add", "link:" + TARGET_DIR], {
+  const spec = NPM_MODE ? PKG_NAME : "link:" + TARGET_DIR;
+  const extra = NPM_MODE ? ["--config.minimumReleaseAge=0"] : [];
+  const r = spawnSync(cmd, ["-y", "@deepseek-ai/dsh", "plugin", "--profile", profile, "add", spec, ...extra], {
     cwd: profileDir,
     stdio: "inherit",
     shell: process.platform === "win32",
   });
   if (r.status === 0) return { done: true };
+  if (NPM_MODE) {
+    out("FAIL", profile, "npm 安装失败（exit " + r.status + "），请检查网络/包名后重试");
+    failures++;
+    return { done: false };
+  }
   // 官方 add 失败（如 profile 自身 lockfile 供应链策略拦截）→ 直接写 link，绕过 pnpm install
   out("NOTE", profile, "官方 dsh plugin add 失败（exit " + r.status + "），改用直接 link 方式");
   try {
@@ -132,6 +145,78 @@ function addToProfile(profile, profileDir) {
     failures++;
     return { done: false };
   }
+}
+
+/** 查找桌面应用主程序（从 runtime-bin/pnpm.cmd 反推 Electron exe），找不到返回 null */
+function findDesktopApp() {
+  const pnpm = join(process.env.APPDATA || "", "@deepseek-ai", "dsh-desktop", "runtime-bin", "pnpm.cmd");
+  if (!existsSync(pnpm)) return null;
+  const m = readFileSync(pnpm, "utf8").match(/"([^"]+\.exe)"/);
+  return m && m[1] && existsSync(m[1]) ? m[1] : null;
+}
+
+/** 用默认浏览器打开 URL（Windows：explorer 会把 http 交给默认浏览器） */
+function openBrowser(url) {
+  try {
+    spawn("explorer.exe", [url], { detached: true, stdio: "ignore" }).unref();
+  } catch {
+    /* 忽略打开失败 */
+  }
+}
+
+/** 后台启动 dsh web 服务（--port 0 自动选端口），解析到 URL 后自动打开浏览器；等待就绪或超时后返回 */
+function startWeb() {
+  console.log("[启动] 正在后台启动 dsh web 服务（--port 0 自动选端口）...");
+  // 用 node 直接跑 npm-cli.js（无 shell）：与安装器同款可靠方式，输出可管道捕获，规避 cmd/shell 层丢输出问题
+  const npmCli = join(dirname(process.execPath), "node_modules", "npm", "bin", "npm-cli.js");
+  const opts = { detached: true, stdio: ["ignore", "pipe", "pipe"] };
+  const child = existsSync(npmCli)
+    ? spawn(process.execPath, [npmCli, "exec", "-y", "@deepseek-ai/dsh", "--", "web", "--port", "0"], opts)
+    : spawn(process.platform === "win32" ? "npx.cmd" : "npx", ["-y", "@deepseek-ai/dsh", "web", "--port", "0"], { ...opts, shell: process.platform === "win32" });
+  return new Promise((resolve) => {
+    let opened = false;
+    const timer = setTimeout(() => {
+      if (!opened) console.log("[启动] 等待就绪超时（web 服务可能仍在后台运行，可稍后手动打开页面）");
+      resolve();
+    }, 30000);
+    const tryOpen = (buf) => {
+      const m = buf.toString().match(/http:\/\/[0-9.:]+/);
+      if (m && !opened) {
+        opened = true;
+        clearTimeout(timer);
+        console.log("[启动] web 已就绪：" + m[0] + "（自动打开浏览器...）");
+        openBrowser(m[0]);
+        resolve();
+      }
+    };
+    if (child.stdout) child.stdout.on("data", tryOpen);
+    if (child.stderr) child.stderr.on("data", tryOpen);
+    child.on("error", (e) => {
+      if (!opened) { clearTimeout(timer); console.log("[启动] web 启动失败：" + String((e && e.message) || e)); }
+      resolve();
+    });
+  });
+}
+
+/** 模拟双击启动桌面应用（explorer 启动，无终端、独立进程） */
+function startDesktop() {
+  const app = findDesktopApp();
+  if (!app) {
+    console.log("[启动] 未找到桌面应用主程序，改启 web ...");
+    return startWeb();
+  }
+  console.log("[启动] 正在启动桌面应用（模拟双击，无终端）：" + app);
+  try {
+    spawn("explorer.exe", [app], { detached: true, stdio: "ignore" }).unref();
+  } catch (e) {
+    console.log("[启动] 启动桌面应用失败：" + String((e && e.message) || e));
+  }
+}
+
+/** 按 profile 自动启动对应端：名字含 desktop → 桌面应用，否则 → web（等待就绪） */
+async function startDsh(profile) {
+  if (/desktop/i.test(profile)) return startDesktop();
+  return startWeb();
 }
 
 console.log("dsh-event-sounds 多 profile 自动配置（" + (DRY ? "dry-run，仅检测" : "实际配置") + "）");
@@ -184,8 +269,8 @@ for (const name of entries) {
 
   const link = checkLink(profileDir);
   if (link.ok) {
-    // --unify 或 --deploy：目标不同 → 统一到链接目标目录
-    if ((UNIFY || DEPLOY) && !sameDir(link.target, TARGET_DIR)) {
+    // --unify 或 --deploy：目标不同 → 统一到链接目标目录（npm 模式不走 link 统一）
+    if (!NPM_MODE && (UNIFY || DEPLOY) && !sameDir(link.target, TARGET_DIR)) {
       out("UNIFY", name, "统一链接到 " + TARGET_DIR + "（原 " + link.target + "）…");
       if (DRY) { summary.push({ name, state: "unify(dry)" }); continue; }
       try {
@@ -219,4 +304,14 @@ for (const s of summary) {
   console.log("  " + s.name + " → " + label);
 }
 console.log(failures === 0 ? "全部完成" : failures + " 处失败");
+
+// --start：配置完成后自动启动对应端（本次配置过的 profile 优先；全为已配置时启动第一个）
+if (START && failures === 0) {
+  const touched = summary.filter((s) => ["add", "fix", "unify"].includes(s.state));
+  const targets = touched.length ? touched : summary.filter((s) => s.state === "ok").slice(0, 1);
+  if (targets.length) {
+    console.log("\n===== 自动启动 =====");
+    for (const t of targets) await startDsh(t.name);
+  }
+}
 process.exit(failures === 0 ? 0 : 1);
