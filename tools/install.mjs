@@ -226,9 +226,30 @@ console.log("目标 profile = " + (ONLY ? ONLY + "（仅此一个）" : "全部"
 
 if (DEPLOY) deploy();
 
+// profiles 缺失：非 dry-run 时自动完成首次初始化（运行 npx @deepseek-ai/dsh web 创建 profile）；dry-run 仅提示
 if (!existsSync(PROFILES_DIR)) {
-  console.log("未找到 profiles 目录：" + PROFILES_DIR + "（未检测到已安装的 dsh。请先下载 DeepSeek Harness 桌面版，或安装 Node.js（https://nodejs.org）后运行 npx @deepseek-ai/dsh web 完成首次初始化）");
-  process.exit(failures === 0 ? 0 : 1);
+  if (DRY) {
+    console.log("[SKIP] 未找到 profiles 目录（dry-run 不初始化）：" + PROFILES_DIR + "（正式运行将自动执行 npx @deepseek-ai/dsh web 完成首次初始化）");
+    process.exit(0);
+  }
+  console.log("未找到 profiles 目录，正在自动完成 dsh 首次初始化（运行 npx @deepseek-ai/dsh web）...");
+  const npx = process.platform === "win32" ? "npx.cmd" : "npx";
+  const child = spawn(npx, ["-y", "@deepseek-ai/dsh", "web"], { detached: true, stdio: "ignore", shell: process.platform === "win32" });
+  const sleepSync = (ms) => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+  let ok = false;
+  for (let i = 0; i < 120 && !ok; i++) {
+    sleepSync(500);
+    if (existsSync(join(PROFILES_DIR, "web", "package.json"))) ok = true;
+  }
+  // 初始化完成即停止 web（避免重复常驻；npm exec 会 fork 子进程，用 taskkill 杀整棵树）
+  if (child.pid) {
+    try { spawnSync("taskkill", ["/PID", String(child.pid), "/T", "/F"], { stdio: "ignore" }); } catch { /* 忽略 */ }
+  }
+  if (!ok) {
+    console.log("[失败] 首次初始化未完成（未能创建 profile），请手动运行 npx @deepseek-ai/dsh web 后重试。");
+    process.exit(1);
+  }
+  console.log("  初始化完成（已创建 web profile）。");
 }
 
 const entries = readdirSync(PROFILES_DIR, { withFileTypes: true })
