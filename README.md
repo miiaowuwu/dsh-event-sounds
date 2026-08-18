@@ -52,10 +52,10 @@ npx @deepseek-ai/dsh web
 - **Settings dialog**: draggable (grab the title bar), z-index on top
   - 4 trigger conditions: **session end / options popup / permission request / stop**, each with an independent 【enable checkbox + sound dropdown】offering **built-in chime / no sound / a specific sound** ("built-in chime" is a Web Audio arpeggio — no audio file required)
   - **Attention events** (options popup / permission request) always ring — they play as soon as they appear, regardless of the conversation's running/viewing state, and take priority over the completion sounds
-  - **Appearance**: Whale Girl (default) / Pure White / Pure Black, plus a **customizable voice name**
+  - **Appearance**: Whale Girl (default) / Pure White / Pure Black, plus a **customizable voice name** (the theme applies to every dialog at once and switches instantly)
   - Volume slider (0–100%), **test sound** dropdown (incl. a "built-in chime" option) + ▶ preview + status bar, reset button position
   - Sound library (local audio in the plugin `sounds/` folder, managed via a `sounds.json` control file) + refresh + **Upload dialog: pick/drag-drop upload, delete sounds, restore hidden bundled sounds; non-bundled sounds can be renamed via ✎**
-  - **"AI Voice" dialog**: above the sound library — bring your own Alibaba Cloud Bailian API Key and cloned voice ID, type a line and generate speech in your custom voice (custom file name / preview / delete, **one-click add to the library with automatic registration**); a step-by-step tutorial with screenshots is included; token costs are on you
+  - **"AI Voice" dialog**: above the sound library — bring your own Alibaba Cloud Bailian API Key and cloned voice ID, type a line and generate speech in your custom voice (custom file name / preview / delete, **one-click add to the library with automatic registration**); a step-by-step tutorial with screenshots is included (click an image to zoom to 3× and drag to pan); token costs are on you
   - 3 bundled sounds ("hirari do～" / "Huh?" / "AWAWA!") — cannot be deleted or renamed (delete = soft-hide, restorable anytime); hidden sounds are directly previewable with instant playback
   - The sound library scrolls vertically beyond 4 entries and never exceeds the settings panel height; file extensions are hidden from sound names
 - **Sound source**: local audio files in the plugin `sounds/` directory (mp3/wav/ogg/m4a/flac/opus/aac/wma/webm), served by the host side via the `/dsh-sounds-control` static server (Range/206 chunking, ETag, streaming)
