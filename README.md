@@ -2,7 +2,7 @@
 
 English | [中文](README.zh.md)
 
-A DSH Web GUI **Sound Lab**: **every sound is yours to customize** — event sounds for **session end / options / permission / stop**, **AI character voice lines**, and an **uploadable sound library**, all **set with a few clicks, no code needed**; draggable floating ball, 3 appearances, dual-persisted config.
+A DSH Web GUI **Sound Lab**: **pick a sound for each of the four triggers** (session end / options popup / permission request / stop), **generate AI character voice lines**, and **upload & manage your own sound library** — all set with a few clicks, no code needed; draggable floating ball, 3 appearances, dual-persisted config.
 
 > 🐋 Character reference: a fan-made project for **Angelina** from *Arknights*. The bundled sample sounds are Angelina's "hirari do～", "Huh?" and "AWAWA!" voice clips, for personal learning and entertainment only — **not for commercial use**.
 
