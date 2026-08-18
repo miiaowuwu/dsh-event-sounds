@@ -19,7 +19,7 @@ Both methods work for **either** user type — Desktop users and `npx dsh web` u
 - **Update**: re-download the latest Setup exe and run it (restarts dsh automatically; older versions are overwritten automatically — no need to uninstall first, no conflicts)
 - **Uninstall**: double-click [dsh-sound-lab-UnSetup-1.2.0-x64.exe](https://github.com/miiaowuwu/dsh-sound-lab/releases/latest/download/dsh-sound-lab-UnSetup-1.2.0-x64.exe) — it restarts dsh automatically when done
 
-> Note (just how it works — no action needed): the installer deploys the plugin to `$DSH_HOME/plugins/dsh-sound-lab` and registers it into **every initialized profile** (web, desktop, …) via the official `dsh plugin` command, so all profiles share the same copy. If no dsh CLI is found, it auto-detects one (desktop bundled runtime → system npx → downloads Node.js); if dsh hasn't been initialized yet (no profiles), it runs `dsh web` once to initialize. On finish it **restarts dsh automatically**: Desktop launches exactly like double-clicking the app (no terminal window, unaffected by closing the installer); web runs in the background and your browser opens the page automatically. Fully automated, no manual config edits.
+> Note (just how it works — no action needed): the installer deploys the plugin to `$DSH_HOME/plugins/dsh-sound-lab` and registers it into **every initialized profile** (web, desktop, …) via the official `dsh plugin` command, so all profiles share the same copy. If no dsh CLI is found, it auto-detects one (desktop bundled runtime → system npx → downloads Node.js); if dsh hasn't been initialized yet (no profiles), it runs `dsh web` once to initialize. On finish it **restarts dsh automatically**: for Desktop it **closes the running instance first, then launches it** (exactly like double-clicking the app — no terminal window, unaffected by closing the installer); when no Desktop app is detected (web environment) it **prompts you to restart the dsh web service manually**. Fully automated, no manual config edits.
 
 **Option B — dsh CLI (needs Node.js, works for both):**
 
@@ -72,17 +72,19 @@ dsh-sound-lab/
 ├── package.json          # Package manifest (dsh.client / dsh.bundle.patch / types / scripts)
 ├── cordis.patch.yml      # Composition patch: mounts line ui-event-sounds
 ├── CHANGELOG.md          # Version history
-├── README.md
+├── README.md / README.zh.md
 ├── LICENSE
-├── sounds/               # Dev: put your audio files here (mp3/wav/ogg etc.)
+├── sounds/               # Sound library: bundled sounds (hirari do～/Huh?/AWAWA!) + uploaded/AI-generated audio
 ├── lib/
-│   ├── index.js          # Host side: /dsh-sounds-control static server (list/config/audio)
+│   ├── index.js          # Host side: /dsh-sounds-control static server (list/config/audio/TTS)
 │   ├── client.js         # Browser side: floating ball + settings dialog + trigger detection + playback
+│   ├── tutorial/         # Illustrated tutorial images for AI voice generation (image1.png / image2.png)
 │   └── types/index.d.ts  # Type declarations
 ├── tools/
 │   ├── install.mjs       # Multi-profile auto-config (setup / --fix / --unify / --deploy)
-│   ├── test-host.mjs     # Host-side API smoke tests (list/config/upload/delete)
-│   └── test-client.mjs   # Browser-side logic smoke tests
+│   ├── test-host.mjs     # Host-side API smoke tests (list/config/upload/delete/TTS)
+│   ├── test-client.mjs   # Browser-side logic smoke tests
+│   └── api/              # Standalone TTS script (tts_api.py + guide + reference audio)
 └── releases/             # Publishing: build-single-exe.ps1 + versioned Setup/UnSetup exe (not in repo)
 ```
 

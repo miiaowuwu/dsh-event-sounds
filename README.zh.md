@@ -19,7 +19,7 @@ DSH Web GUI 声音工坊（Sound Lab）：**一切声音由你自定义**——�
 - **更新**：重新下载最新版 Setup exe 并双击（会自动重启 dsh；旧版本会被自动覆盖，无需先卸载，不会冲突）
 - **卸载**：双击 [dsh-sound-lab-UnSetup-1.2.0-x64.exe](https://github.com/miiaowuwu/dsh-sound-lab/releases/latest/download/dsh-sound-lab-UnSetup-1.2.0-x64.exe)（完成后会自动重启 dsh）
 
-> 说明（仅了解原理，无需任何操作）：安装器把插件部署到 `$DSH_HOME\plugins\dsh-sound-lab`，并扫描 `$DSH_HOME\profiles` 下**所有已初始化的 profile**（web / desktop / …）逐一调用官方 `dsh plugin` 命令登记，使各 profile 共用同一份部署副本；若本机没有 dsh CLI，会自动穷举补齐（桌面应用自带 runtime → 系统 npx → 自动下载 Node.js）；若 dsh 尚未初始化（无 profiles），会自动运行 dsh web 完成首次初始化。安装完成后**自动重启 dsh**：桌面版像双击软件一样打开（无终端窗口，关闭安装器窗口不影响）；web 版在后台常驻启动，并自动打开浏览器跳转页面。全程自动化，不手改任何配置。
+> 说明（仅了解原理，无需任何操作）：安装器把插件部署到 `$DSH_HOME\plugins\dsh-sound-lab`，并扫描 `$DSH_HOME\profiles` 下**所有已初始化的 profile**（web / desktop / …）逐一调用官方 `dsh plugin` 命令登记，使各 profile 共用同一份部署副本；若本机没有 dsh CLI，会自动穷举补齐（桌面应用自带 runtime → 系统 npx → 自动下载 Node.js）；若 dsh 尚未初始化（无 profiles），会自动运行 dsh web 完成首次初始化。安装完成后**自动重启 dsh**：桌面版**先关闭正在运行的实例，再重新启动**（模拟双击打开，无终端窗口，关闭安装器窗口不影响）；未检测到桌面应用（web 环境）时**提示手动重启 dsh web 服务**。全程自动化，不手改任何配置。
 
 **方式二：dsh CLI（需 Node.js，两种用户都可用）**
 
@@ -72,17 +72,19 @@ dsh-sound-lab/
 ├── package.json          # 包声明（dsh.client / dsh.bundle.patch / types / scripts）
 ├── cordis.patch.yml      # 组成补丁：挂载行 ui-event-sounds
 ├── CHANGELOG.md          # 版本记录
-├── README.md
+├── README.md / README.zh.md
 ├── LICENSE
-├── sounds/               # 开发时把音频文件放这里（mp3/wav/ogg 等）
+├── sounds/               # 音效库：附带音效（hirari do～/呢？/啊哇哇！）+ 上传/AI 生成的音频
 ├── lib/
-│   ├── index.js          # 宿主端：/dsh-sounds-control 静态服务（list/config/音频）
+│   ├── index.js          # 宿主端：/dsh-sounds-control 静态服务（list/config/音频/TTS）
 │   ├── client.js         # 浏览器端：悬浮球 + 配置弹窗 + 触发监测 + 播放
+│   ├── tutorial/         # AI 生成角色音频的图文教程配图（image1.png / image2.png）
 │   └── types/index.d.ts  # 类型声明
 ├── tools/
 │   ├── install.mjs       # 多 profile 自动配置（setup / --fix / --unify / --deploy）
-│   ├── test-host.mjs     # 宿主端接口冒烟测试（list/config/upload/delete）
-│   └── test-client.mjs   # 浏览器端逻辑冒烟测试
+│   ├── test-host.mjs     # 宿主端接口冒烟测试（list/config/upload/delete/TTS）
+│   ├── test-client.mjs   # 浏览器端逻辑冒烟测试
+│   └── api/              # 独立 TTS 脚本（tts_api.py + 使用说明 + 参考音频）
 └── releases/             # 发布：build-single-exe.ps1 + 各版本 Setup/UnSetup exe（不入库）
 ```
 
