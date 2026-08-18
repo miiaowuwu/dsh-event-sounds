@@ -13,11 +13,11 @@ DSH Web GUI 声音工坊（Sound Lab）：**四个触发条件各自可选用音
 **方式一：Setup 安装器（推荐，零依赖，两种用户都可用）**
 
 1. **如果 dsh 尚未运行，请先启动一次**（桌面应用或 `npx dsh web`），完成 profile 初始化；然后**退出**正在运行的 dsh（桌面应用或 `dsh web` 服务）
-2. 下载 [dsh-sound-lab-Setup-1.2.0-x64.exe](https://github.com/miiaowuwu/dsh-sound-lab/releases/latest/download/dsh-sound-lab-Setup-1.2.0-x64.exe)，**双击**
+2. 下载 [dsh-sound-lab-Setup-1.2.1-x64.exe](https://github.com/miiaowuwu/dsh-sound-lab/releases/latest/download/dsh-sound-lab-Setup-1.2.1-x64.exe)，**双击**
 3. 安装器会**自动重启** dsh，看到 🔊 悬浮球即安装成功
 
 - **更新**：重新下载最新版 Setup exe 并双击（会自动重启 dsh；旧版本会被自动覆盖，无需先卸载，不会冲突）
-- **卸载**：双击 [dsh-sound-lab-UnSetup-1.2.0-x64.exe](https://github.com/miiaowuwu/dsh-sound-lab/releases/latest/download/dsh-sound-lab-UnSetup-1.2.0-x64.exe)（完成后会自动重启 dsh）
+- **卸载**：双击 [dsh-sound-lab-UnSetup-1.2.1-x64.exe](https://github.com/miiaowuwu/dsh-sound-lab/releases/latest/download/dsh-sound-lab-UnSetup-1.2.1-x64.exe)（完成后会自动重启 dsh）
 
 > 说明（仅了解原理，无需任何操作）：安装器把插件部署到 `$DSH_HOME\plugins\dsh-sound-lab`，并扫描 `$DSH_HOME\profiles` 下**所有已初始化的 profile**（web / desktop / …）逐一调用官方 `dsh plugin` 命令登记，使各 profile 共用同一份部署副本；若本机没有 dsh CLI，会自动穷举补齐（桌面应用自带 runtime → 系统 npx → 自动下载 Node.js）；若 dsh 尚未初始化（无 profiles），会自动运行 dsh web 完成首次初始化。安装完成后**自动重启 dsh**：桌面版**先关闭正在运行的实例，再重新启动**（模拟双击打开，无终端窗口，关闭安装器窗口不影响）；未检测到桌面应用（web 环境）时**提示手动重启 dsh web 服务**。全程自动化，不手改任何配置。
 

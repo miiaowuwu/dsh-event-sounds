@@ -1,7 +1,7 @@
 {
   "name": "dsh-sound-lab",
   "description": "DSH 声音工坊（Sound Lab）：一切声音由你自定义——对话事件音效、AI 角色语音生成、音效库上传管理，全程可视化点选即可用；可拖动悬浮球、三种外观、配置双持久化。Hot-pluggable — mounted via dsh plugin add + cordis.patch.yml, no dsh source changes.",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "main": "lib/index.js",
   "types": "./lib/types/index.d.ts",
