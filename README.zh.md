@@ -13,13 +13,13 @@ DSH Web GUI 客户端插件：在对话「**会话结束 / 弹出选项 / 请求
 **方式一：Setup 安装器（推荐，零依赖，两种用户都可用）**
 
 1. **如果 dsh 尚未运行，请先启动一次**（桌面应用或 `npx dsh web`），完成 profile 初始化；然后**退出**正在运行的 dsh（桌面应用或 `dsh web` 服务）
-2. 下载 [dsh-event-sounds-Setup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-Setup-1.1.0-x64.exe)，**双击**
+2. 下载 [dsh-event-sounds-Setup-1.2.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-Setup-1.2.0-x64.exe)，**双击**
 3. 安装器会**自动重启** dsh，看到 🔊 悬浮球即安装成功
 
 - **更新**：重新下载最新版 Setup exe 并双击（会自动重启 dsh；旧版本会被自动覆盖，无需先卸载，不会冲突）
-- **卸载**：双击 [dsh-event-sounds-UnSetup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.1.0-x64.exe)（完成后会自动重启 dsh）
+- **卸载**：双击 [dsh-event-sounds-UnSetup-1.2.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.2.0-x64.exe)（完成后会自动重启 dsh）
 
-> 说明（仅了解原理，无需任何操作）：安装器把插件部署到 `$DSH_HOME\plugins\dsh-client-ui-event-sounds`，并扫描 `$DSH_HOME\profiles` 下**所有已初始化的 profile**（web / desktop / …）逐一调用官方 `dsh plugin` 命令登记，使各 profile 共用同一份部署副本；若本机没有 dsh CLI，会自动穷举补齐（桌面应用自带 runtime → 系统 npx → 自动下载 Node.js）；若 dsh 尚未初始化（无 profiles），会自动运行 dsh web 完成首次初始化。安装完成后**自动重启 dsh**：桌面版像双击软件一样打开（无终端窗口，关闭安装器窗口不影响）；web 版在后台常驻启动，并自动打开浏览器跳转页面。全程自动化，不手改任何配置。
+> 说明（仅了解原理，无需任何操作）：安装器把插件部署到 `$DSH_HOME\plugins\dsh-event-sounds`，并扫描 `$DSH_HOME\profiles` 下**所有已初始化的 profile**（web / desktop / …）逐一调用官方 `dsh plugin` 命令登记，使各 profile 共用同一份部署副本；若本机没有 dsh CLI，会自动穷举补齐（桌面应用自带 runtime → 系统 npx → 自动下载 Node.js）；若 dsh 尚未初始化（无 profiles），会自动运行 dsh web 完成首次初始化。安装完成后**自动重启 dsh**：桌面版像双击软件一样打开（无终端窗口，关闭安装器窗口不影响）；web 版在后台常驻启动，并自动打开浏览器跳转页面。全程自动化，不手改任何配置。
 
 **方式二：dsh CLI（需 Node.js，两种用户都可用）**
 
@@ -30,12 +30,12 @@ DSH Web GUI 客户端插件：在对话「**会话结束 / 弹出选项 / 请求
 
 ```bash
 # 桌面版用户 —— 执行这一条
-npx @deepseek-ai/dsh plugin --profile desktop add dsh-client-ui-event-sounds --config.minimumReleaseAge=0
+npx @deepseek-ai/dsh plugin --profile desktop add dsh-event-sounds --config.minimumReleaseAge=0
 ```
 
 ```bash
 # web 用户（用 `npx dsh web` 运行）—— 执行这一条
-npx @deepseek-ai/dsh plugin --profile web add dsh-client-ui-event-sounds --config.minimumReleaseAge=0
+npx @deepseek-ai/dsh plugin --profile web add dsh-event-sounds --config.minimumReleaseAge=0
 ```
 
 然后**重启** dsh（若尚未启动则直接启动）：
@@ -54,7 +54,10 @@ npx @deepseek-ai/dsh web
   - **注意类事件**（弹出选项 / 请求许可）始终响铃：出现即播，不受会话运行/查看状态限制，且优先于完成类音效
   - **外观风格**：鲸鱼娘（默认）/ 纯白 / 纯黑 + **语音名字可自定义**
   - 音量滑杆（0–100%）、**测试音效** 下拉（含「内置提示音」选项）+ ▶ 试听 + 状态栏、重置按钮位置
-  - 音效库（插件 `sounds/` 文件夹的本地音频）+ 刷新 + **「自定义」弹窗：选择/拖拽上传音频、删除音效、恢复被隐藏的附带音效**
+  - 音效库（插件 `sounds/` 目录本地音频 + `sounds.json` 控制文件管理）+ 刷新 + **「上传」弹窗：选择/拖拽上传音频、删除音效、恢复被隐藏的附带音效；非附带音效支持 ✎ 重命名**
+  - **「AI生成角色音频」**：音效库上方入口，用你自己的阿里云百炼 API Key 与复刻音色ID，输入文本一键生成专属音色语音（可自定义文件名/试听/删除，**一键加入音效库自动登记**），弹窗内附图文详细教程，token 消耗自负
+  - 附带音效 × 3（「hirari do～」/「呢？」/「啊哇哇！」）：不可删除、不可重命名（删除=软隐藏，可随时恢复）；隐藏音效可直接试听且秒出
+  - 音效库超过 4 条自动上下滚动，不超出配置页高度；音效名不显示文件后缀
 - **音效来源**：插件包 `sounds/` 目录的本地音频文件（mp3/wav/ogg/m4a/flac/opus/aac/wma/webm），宿主端经 `/dsh-sounds-control` 静态服务（Range/206 分片、ETag、流式）提供
 - **配置持久化**：localStorage + 宿主端 `config.json` 双写，重启不丢；加载时逐字段清洗（类型/范围/枚举），脏数据回退默认值
 - **启动即预加载**：打开软件时自动拉取配置与音效列表并缓冲配置的音效，首次播放秒出
@@ -99,7 +102,7 @@ dsh-event-sounds/
 
 ## 使用
 
-1. **准备音效**：开发时把音频文件放入仓库 `sounds/` 目录（见上方目录树）；已安装使用时无需手动找文件夹——打开配置弹窗 → 音效库 → **「自定义」**，选择本地文件或拖拽导入即可（自动复制进安装位置的 `sounds/` 目录），也可在列表中删除音效（附带音效为隐藏，可随时恢复）。
+1. **准备音效**：开发时把音频文件放入仓库 `sounds/` 目录（见上方目录树），启动后会自动对账登记进音效库；已安装使用时无需手动找文件夹——打开配置弹窗 → 音效库 → **「上传」**，选择本地文件或拖拽导入即可（自动复制进安装位置的 `sounds/` 目录），也可在列表中删除音效（附带音效为隐藏，可随时恢复）或 ✎ 重命名。
 2. **打开配置弹窗**：点击 🔊 悬浮球
 3. **刷新音效列表**：点击「刷新」，插件会枚举 `sounds/` 下的所有音频文件
 4. **配置触发条件**：对「会话结束 / 弹出选项 / 请求许可 / 停止」四个事件，分别【勾选启用 + 选择音效】，下拉可选「内置提示音 / 不播放 / 具体音效」（「内置提示音」为 Web Audio 琶音，不依赖音频文件）

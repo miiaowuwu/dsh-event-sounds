@@ -13,13 +13,13 @@ Both methods work for **either** user type — Desktop users and `npx dsh web` u
 **Option A — Setup installer (recommended, zero dependencies, works for both):**
 
 1. **If dsh isn't running, start it once** (the Desktop app or `npx dsh web`) so its profiles get initialized — then **quit it** (the Desktop app or the `dsh web` server)
-2. Download [dsh-event-sounds-Setup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-Setup-1.1.0-x64.exe) and **double-click it**
+2. Download [dsh-event-sounds-Setup-1.2.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-Setup-1.2.0-x64.exe) and **double-click it**
 3. The installer **restarts dsh automatically** — the 🔊 floating ball means it's installed
 
 - **Update**: re-download the latest Setup exe and run it (restarts dsh automatically; older versions are overwritten automatically — no need to uninstall first, no conflicts)
-- **Uninstall**: double-click [dsh-event-sounds-UnSetup-1.1.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.1.0-x64.exe) — it restarts dsh automatically when done
+- **Uninstall**: double-click [dsh-event-sounds-UnSetup-1.2.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.2.0-x64.exe) — it restarts dsh automatically when done
 
-> Note (just how it works — no action needed): the installer deploys the plugin to `$DSH_HOME/plugins/dsh-client-ui-event-sounds` and registers it into **every initialized profile** (web, desktop, …) via the official `dsh plugin` command, so all profiles share the same copy. If no dsh CLI is found, it auto-detects one (desktop bundled runtime → system npx → downloads Node.js); if dsh hasn't been initialized yet (no profiles), it runs `dsh web` once to initialize. On finish it **restarts dsh automatically**: Desktop launches exactly like double-clicking the app (no terminal window, unaffected by closing the installer); web runs in the background and your browser opens the page automatically. Fully automated, no manual config edits.
+> Note (just how it works — no action needed): the installer deploys the plugin to `$DSH_HOME/plugins/dsh-event-sounds` and registers it into **every initialized profile** (web, desktop, …) via the official `dsh plugin` command, so all profiles share the same copy. If no dsh CLI is found, it auto-detects one (desktop bundled runtime → system npx → downloads Node.js); if dsh hasn't been initialized yet (no profiles), it runs `dsh web` once to initialize. On finish it **restarts dsh automatically**: Desktop launches exactly like double-clicking the app (no terminal window, unaffected by closing the installer); web runs in the background and your browser opens the page automatically. Fully automated, no manual config edits.
 
 **Option B — dsh CLI (needs Node.js, works for both):**
 
@@ -30,12 +30,12 @@ Pick **the one command** that matches how you run dsh — Desktop or web — and
 
 ```bash
 # Desktop users —— run this one
-npx @deepseek-ai/dsh plugin --profile desktop add dsh-client-ui-event-sounds --config.minimumReleaseAge=0
+npx @deepseek-ai/dsh plugin --profile desktop add dsh-event-sounds --config.minimumReleaseAge=0
 ```
 
 ```bash
 # web users (dsh runs via `npx dsh web`) —— run this one
-npx @deepseek-ai/dsh plugin --profile web add dsh-client-ui-event-sounds --config.minimumReleaseAge=0
+npx @deepseek-ai/dsh plugin --profile web add dsh-event-sounds --config.minimumReleaseAge=0
 ```
 
 Then **restart** dsh (or just start it if it isn't running):
@@ -54,7 +54,10 @@ npx @deepseek-ai/dsh web
   - **Attention events** (options popup / permission request) always ring — they play as soon as they appear, regardless of the conversation's running/viewing state, and take priority over the completion sounds
   - **Appearance**: Whale Girl (default) / Pure White / Pure Black, plus a **customizable voice name**
   - Volume slider (0–100%), **test sound** dropdown (incl. a "built-in chime" option) + ▶ preview + status bar, reset button position
-  - Sound library (local audio in the plugin `sounds/` folder) + refresh + **Custom dialog: pick/drag-drop upload, delete sounds, restore hidden bundled sounds**
+  - Sound library (local audio in the plugin `sounds/` folder, managed via a `sounds.json` control file) + refresh + **Upload dialog: pick/drag-drop upload, delete sounds, restore hidden bundled sounds; non-bundled sounds can be renamed via ✎**
+  - **"AI Voice" dialog**: above the sound library — bring your own Alibaba Cloud Bailian API Key and cloned voice ID, type a line and generate speech in your custom voice (custom file name / preview / delete, **one-click add to the library with automatic registration**); a step-by-step tutorial with screenshots is included; token costs are on you
+  - 3 bundled sounds ("hirari do～" / "Huh?" / "AWAWA!") — cannot be deleted or renamed (delete = soft-hide, restorable anytime); hidden sounds are directly previewable with instant playback
+  - The sound library scrolls vertically beyond 4 entries and never exceeds the settings panel height; file extensions are hidden from sound names
 - **Sound source**: local audio files in the plugin `sounds/` directory (mp3/wav/ogg/m4a/flac/opus/aac/wma/webm), served by the host side via the `/dsh-sounds-control` static server (Range/206 chunking, ETag, streaming)
 - **Persistent config**: dual-write to localStorage + host-side `config.json`, survives restarts; every field is sanitized (type/range/enum) on load, bad values fall back to defaults
 - **Preload on startup**: fetches config and sound list and buffers the configured sound when the app opens, so the first play is instant
@@ -99,7 +102,7 @@ Because dsh plugins are isolated **per profile** (`$DSH_HOME/profiles/<name>` ea
 
 ## Usage
 
-1. **Add sounds**: during development, put audio files in the repo `sounds/` folder (see the directory tree above). When installed, there is no need to hunt for the folder — open the settings dialog → Sound library → **Custom**, then pick a local file or drag & drop to import (it is copied into the `sounds/` folder of the install location automatically). You can also delete sounds from the list (bundled sounds are hidden, restorable anytime).
+1. **Add sounds**: during development, put audio files in the repo `sounds/` folder (see the directory tree above) — they are reconciled into the library automatically on startup. When installed, there is no need to hunt for the folder — open the settings dialog → Sound library → **Upload**, then pick a local file or drag & drop to import (it is copied into the `sounds/` folder of the install location automatically). You can also delete sounds from the list (bundled sounds are hidden, restorable anytime) or rename them via ✎.
 2. **Open the settings dialog**: click the 🔊 floating ball
 3. **Refresh the sound list**: click "Refresh"; the plugin enumerates all audio files under `sounds/`
 4. **Configure triggers**: for the four events (session end / options popup / permission request / stop), set 【enable + sound】independently — each dropdown offers "built-in chime / no sound / a specific sound" ("built-in chime" is a Web Audio arpeggio — no audio file required)

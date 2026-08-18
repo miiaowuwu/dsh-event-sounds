@@ -1,5 +1,7 @@
 # 运行时状态（插件运行后生成，不入库）
 config.json
+sounds/sounds.json
+sounds/generated/
 
 # 构建产物与发布目录（exe 上传到 GitHub Releases，不入库）
 *.exe

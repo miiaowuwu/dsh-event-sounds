@@ -9,4 +9,4 @@
 # served at /plugins/ui-event-sounds/client.js) load in the web GUI.
 - insert:
     - id: ui-event-sounds
-      name: 'dsh-client-ui-event-sounds'
+      name: 'dsh-event-sounds'

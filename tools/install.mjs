@@ -14,7 +14,7 @@
 //   --unify     强制所有 profile 的链接统一指向当前开发目录（桌面版与 web 版共用同一份代码）
 //   --deploy    把插件复制到 $DSH_HOME/plugins/<name>，并把所有 profile 的链接统一指向
 //               部署副本（web 与 desktop 全程走 DSH_HOME 一条路；开发期请用 link 开发目录）
-//   --npm       改用 npm registry 安装（spec = dsh-client-ui-event-sounds，并带
+//   --npm       改用 npm registry 安装（spec = dsh-event-sounds，并带
 //               --config.minimumReleaseAge=0 绕过供应链闸门），适用于不依赖 GitHub 直连的发布通道
 //   --start     配置完成后自动启动 dsh：desktop profile → 弹桌面应用窗口；web profile →
 //               后台启动 dsh web 并自动打开浏览器
@@ -26,7 +26,7 @@ import { fileURLToPath } from "node:url";
 
 const SELF = dirname(fileURLToPath(import.meta.url));
 const PKG_ROOT = resolve(SELF, "..");
-const PKG_NAME = "dsh-client-ui-event-sounds";
+const PKG_NAME = "dsh-event-sounds";
 const DSH_HOME = process.env.DSH_HOME || join(homedir(), ".dsh");
 const PROFILES_DIR = join(DSH_HOME, "profiles");
 const DEPLOY_DIR = join(DSH_HOME, "plugins", PKG_NAME);
@@ -36,7 +36,7 @@ const DRY = args.includes("--dry-run");
 const FIX = args.includes("--fix");
 const UNIFY = args.includes("--unify"); // 强制 profile 链接到目标目录
 const DEPLOY = args.includes("--deploy"); // 部署模式：统一走 DSH_HOME/plugins
-const NPM_MODE = args.includes("--npm"); // npm 源安装（dsh-client-ui-event-sounds），不走 link
+const NPM_MODE = args.includes("--npm"); // npm 源安装（dsh-event-sounds），不走 link
 const START = args.includes("--start"); // 配置完成后自动启动 dsh（desktop 弹应用 / web 启动并开浏览器）
 // 仅处理指定 profile（不传则处理全部）：支持「desktop 用 exe 部署、web 用开发目录」这类混合模式
 const profileIdx = args.indexOf("--profile");
