@@ -4,7 +4,7 @@ English | [中文](README.zh.md)
 
 A DSH Web GUI client plugin: plays a chosen sound effect when the conversation **ends / shows options / requests permission / stops**.
 
-> 🐋 Character reference: a fan-made project for **Angelina** from *Arknights*. The bundled sample sounds are Angelina's "hirari do～" and "Huh?" voice clips, for personal learning and entertainment only — **not for commercial use**.
+> 🐋 Character reference: a fan-made project for **Angelina** from *Arknights*. The bundled sample sounds are Angelina's "hirari do～", "Huh?" and "AWAWA!" voice clips, for personal learning and entertainment only — **not for commercial use**.
 
 ## Install
 
@@ -114,7 +114,7 @@ Because dsh plugins are isolated **per profile** (`$DSH_HOME/profiles/<name>` ea
 ## Disclaimer
 
 - This is a **fan-made (unofficial) personal project** with no affiliation, sponsorship, or authorization from the official *Arknights* team or Shanghai Hypergryph Network Technology Co., Ltd.
-- Character images, names, quotes, and voice assets referenced in this project (including Angelina's "hirari do～" and "Huh?" voice clips) belong to the official *Arknights* team and their respective right holders; the copyright of the voices belongs to the respective voice actors.
+- Character images, names, quotes, and voice assets referenced in this project (including Angelina's "hirari do～", "Huh?" and "AWAWA!" voice clips) belong to the official *Arknights* team and their respective right holders; the copyright of the voices belongs to the respective voice actors.
 - This project is for personal learning, research, and entertainment only — **not for commercial use** and not for profit.
 - The sound assets shipped with the project are local audio files added by users; users are responsible for ensuring their usage complies with applicable laws and the original right holders' requirements.
 - If any right holder believes any content of this project infringes their rights, please contact the author to remove the material and we will handle it promptly.
