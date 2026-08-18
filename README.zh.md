@@ -80,12 +80,11 @@ dsh-sound-lab/
 │   ├── client.js         # 浏览器端：悬浮球 + 配置弹窗 + 触发监测 + 播放
 │   ├── tutorial/         # AI 生成角色音频的图文教程配图（image1.png / image2.png）
 │   └── types/index.d.ts  # 类型声明
-├── tools/
-│   ├── install.mjs       # 多 profile 自动配置（setup / --fix / --unify / --deploy）
-│   ├── test-host.mjs     # 宿主端接口冒烟测试（list/config/upload/delete/TTS）
-│   ├── test-client.mjs   # 浏览器端逻辑冒烟测试
-│   └── api/              # 独立 TTS 脚本（tts_api.py + 使用说明 + 参考音频）
-└── releases/             # 发布：build-single-exe.ps1 + 各版本 Setup/UnSetup exe（不入库）
+└── tools/
+    ├── install.mjs       # 多 profile 自动配置（setup / --fix / --unify / --deploy）
+    ├── test-host.mjs     # 宿主端接口冒烟测试（list/config/upload/delete/TTS）
+    ├── test-client.mjs   # 浏览器端逻辑冒烟测试
+    └── api/              # 独立 TTS 脚本（tts_api.py + 使用说明 + 参考音频）
 ```
 
 ## 双端结构

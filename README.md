@@ -80,12 +80,11 @@ dsh-sound-lab/
 │   ├── client.js         # Browser side: floating ball + settings dialog + trigger detection + playback
 │   ├── tutorial/         # Illustrated tutorial images for AI voice generation (image1.png / image2.png)
 │   └── types/index.d.ts  # Type declarations
-├── tools/
-│   ├── install.mjs       # Multi-profile auto-config (setup / --fix / --unify / --deploy)
-│   ├── test-host.mjs     # Host-side API smoke tests (list/config/upload/delete/TTS)
-│   ├── test-client.mjs   # Browser-side logic smoke tests
-│   └── api/              # Standalone TTS script (tts_api.py + guide + reference audio)
-└── releases/             # Publishing: build-single-exe.ps1 + versioned Setup/UnSetup exe (not in repo)
+└── tools/
+    ├── install.mjs       # Multi-profile auto-config (setup / --fix / --unify / --deploy)
+    ├── test-host.mjs     # Host-side API smoke tests (list/config/upload/delete/TTS)
+    ├── test-client.mjs   # Browser-side logic smoke tests
+    └── api/              # Standalone TTS script (tts_api.py + guide + reference audio)
 ```
 
 ## Dual-side structure
