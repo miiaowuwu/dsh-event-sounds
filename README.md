@@ -1,8 +1,8 @@
-# dsh-sound-lab — Voice Control Plugin (Angelina「hirari do～」)
+# dsh-sound-lab — Sound Lab
 
 English | [中文](README.zh.md)
 
-A DSH Web GUI client plugin: plays a chosen sound effect when the conversation **ends / shows options / requests permission / stops**.
+A DSH Web GUI **Sound Lab**: plays event sounds when the conversation **ends / shows options / requests permission / stops**, **generates AI character voice lines**, and **manages your sound library**.
 
 > 🐋 Character reference: a fan-made project for **Angelina** from *Arknights*. The bundled sample sounds are Angelina's "hirari do～", "Huh?" and "AWAWA!" voice clips, for personal learning and entertainment only — **not for commercial use**.
 
