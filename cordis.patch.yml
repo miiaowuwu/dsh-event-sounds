@@ -1,4 +1,4 @@
-# dsh-event-sounds bundle patch: inserts the dual-face plugin row into the web
+# dsh-sound-lab bundle patch: inserts the dual-face plugin row into the web
 # profile roster. Applied as a profile bundle layer (the `dsh.bundle.patch`
 # manifest field) over dsh-base; activate with
 #   dsh plugin --profile <name> add link:D:/ComputerStudy/Project/deepseek/鲸鱼娘/sounds-control
@@ -9,4 +9,4 @@
 # served at /plugins/ui-event-sounds/client.js) load in the web GUI.
 - insert:
     - id: ui-event-sounds
-      name: 'dsh-event-sounds'
+      name: 'dsh-sound-lab'

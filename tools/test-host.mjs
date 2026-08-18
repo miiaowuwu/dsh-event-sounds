@@ -1,4 +1,4 @@
-// dsh-event-sounds 宿主端接口冒烟测试（运行：node tools/test-host.mjs）
+// dsh-sound-lab 宿主端接口冒烟测试（运行：node tools/test-host.mjs）
 //
 // 用 fake ctx 捕获 webServer 路由注册，再起一个真实 http.Server 把 handler 挂上去，
 // 用 fetch 对 list / config / upload / delete 与 TTS（AI 生成角色音频）接口做端到端冒烟断言。

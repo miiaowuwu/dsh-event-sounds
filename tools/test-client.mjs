@@ -1,4 +1,4 @@
-// dsh-event-sounds 浏览器端（Client 半）逻辑冒烟测试（运行：node tools/test-client.mjs）
+// dsh-sound-lab 浏览器端（Client 半）逻辑冒烟测试（运行：node tools/test-client.mjs）
 //
 // 用 fake window（localStorage / fetch / AudioContext / Audio）+ fake React
 // 在 Node 里执行 lib/client.js 的 factory，随后 apply(fakeCtx) 注册槽位，

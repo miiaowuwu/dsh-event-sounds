@@ -1,7 +1,7 @@
 import type { Context } from "@deepseek-ai/cordis"
 
 /**
- * `dsh-event-sounds` 的配置结构。
+ * `dsh-sound-lab` 的配置结构。
  *
  * 浏览器端持久化于 localStorage（键 `dsh.soundsControl.v1`），
  * 宿主端同时落盘到插件目录 `config.json`（双持久化，换浏览器/清缓存不丢）。

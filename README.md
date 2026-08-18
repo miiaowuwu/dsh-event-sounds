@@ -1,4 +1,4 @@
-# dsh-event-sounds — Voice Control Plugin (Angelina「hirari do～」)
+# dsh-sound-lab — Voice Control Plugin (Angelina「hirari do～」)
 
 English | [中文](README.zh.md)
 
@@ -13,13 +13,13 @@ Both methods work for **either** user type — Desktop users and `npx dsh web` u
 **Option A — Setup installer (recommended, zero dependencies, works for both):**
 
 1. **If dsh isn't running, start it once** (the Desktop app or `npx dsh web`) so its profiles get initialized — then **quit it** (the Desktop app or the `dsh web` server)
-2. Download [dsh-event-sounds-Setup-1.2.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-Setup-1.2.0-x64.exe) and **double-click it**
+2. Download [dsh-sound-lab-Setup-1.2.0-x64.exe](https://github.com/miiaowuwu/dsh-sound-lab/releases/latest/download/dsh-sound-lab-Setup-1.2.0-x64.exe) and **double-click it**
 3. The installer **restarts dsh automatically** — the 🔊 floating ball means it's installed
 
 - **Update**: re-download the latest Setup exe and run it (restarts dsh automatically; older versions are overwritten automatically — no need to uninstall first, no conflicts)
-- **Uninstall**: double-click [dsh-event-sounds-UnSetup-1.2.0-x64.exe](https://github.com/miiaowuwu/dsh-event-sounds/releases/latest/download/dsh-event-sounds-UnSetup-1.2.0-x64.exe) — it restarts dsh automatically when done
+- **Uninstall**: double-click [dsh-sound-lab-UnSetup-1.2.0-x64.exe](https://github.com/miiaowuwu/dsh-sound-lab/releases/latest/download/dsh-sound-lab-UnSetup-1.2.0-x64.exe) — it restarts dsh automatically when done
 
-> Note (just how it works — no action needed): the installer deploys the plugin to `$DSH_HOME/plugins/dsh-event-sounds` and registers it into **every initialized profile** (web, desktop, …) via the official `dsh plugin` command, so all profiles share the same copy. If no dsh CLI is found, it auto-detects one (desktop bundled runtime → system npx → downloads Node.js); if dsh hasn't been initialized yet (no profiles), it runs `dsh web` once to initialize. On finish it **restarts dsh automatically**: Desktop launches exactly like double-clicking the app (no terminal window, unaffected by closing the installer); web runs in the background and your browser opens the page automatically. Fully automated, no manual config edits.
+> Note (just how it works — no action needed): the installer deploys the plugin to `$DSH_HOME/plugins/dsh-sound-lab` and registers it into **every initialized profile** (web, desktop, …) via the official `dsh plugin` command, so all profiles share the same copy. If no dsh CLI is found, it auto-detects one (desktop bundled runtime → system npx → downloads Node.js); if dsh hasn't been initialized yet (no profiles), it runs `dsh web` once to initialize. On finish it **restarts dsh automatically**: Desktop launches exactly like double-clicking the app (no terminal window, unaffected by closing the installer); web runs in the background and your browser opens the page automatically. Fully automated, no manual config edits.
 
 **Option B — dsh CLI (needs Node.js, works for both):**
 
@@ -30,12 +30,12 @@ Pick **the one command** that matches how you run dsh — Desktop or web — and
 
 ```bash
 # Desktop users —— run this one
-npx @deepseek-ai/dsh plugin --profile desktop add dsh-event-sounds --config.minimumReleaseAge=0
+npx @deepseek-ai/dsh plugin --profile desktop add dsh-sound-lab --config.minimumReleaseAge=0
 ```
 
 ```bash
 # web users (dsh runs via `npx dsh web`) —— run this one
-npx @deepseek-ai/dsh plugin --profile web add dsh-event-sounds --config.minimumReleaseAge=0
+npx @deepseek-ai/dsh plugin --profile web add dsh-sound-lab --config.minimumReleaseAge=0
 ```
 
 Then **restart** dsh (or just start it if it isn't running):
@@ -68,7 +68,7 @@ npx @deepseek-ai/dsh web
 ## Directory structure
 
 ```
-dsh-event-sounds/
+dsh-sound-lab/
 ├── package.json          # Package manifest (dsh.client / dsh.bundle.patch / types / scripts)
 ├── cordis.patch.yml      # Composition patch: mounts line ui-event-sounds
 ├── CHANGELOG.md          # Version history

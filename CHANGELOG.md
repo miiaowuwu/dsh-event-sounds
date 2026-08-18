@@ -2,8 +2,8 @@
 
 ## 1.2.0 (2026-08-18)
 
-- **包名更名**：npm 包名由 `dsh-client-ui-event-sounds` 改为 `dsh-event-sounds`（与仓库名一致），
-  安装命令、部署目录（`$DSH_HOME/plugins/dsh-event-sounds`）、浏览器端模块 id 同步更新。
+- **包名更名**：npm 包名由 `dsh-client-ui-event-sounds` 改为 `dsh-sound-lab`（与仓库名一致），
+  安装命令、部署目录（`$DSH_HOME/plugins/dsh-sound-lab`）、浏览器端模块 id 同步更新。
 - **AI 生成角色音频**：配置弹窗音效库上方新增「🎙 AI生成角色音频」弹窗——
   - 详细教程可展开（含配图），指引获取阿里云百炼 API Key 与复刻音色ID；弹窗 4:3 横版，教程展开时最高 4:6、不超过页面高度；
   - 凭据三档状态提示：未配置（缺任一）/ 未通过（全配置但调用失败）/ 配置成功；已配置成功也可随时修改；
