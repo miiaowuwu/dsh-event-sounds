@@ -13,11 +13,11 @@ Both methods work for **either** user type — Desktop users and `npx dsh web` u
 **Option A — Setup installer (recommended, zero dependencies, works for both):**
 
 1. **If dsh isn't running, start it once** (the Desktop app or `npx dsh web`) so its profiles get initialized — then **quit it** (the Desktop app or the `dsh web` server)
-2. Download [dsh-sound-lab-Setup-1.2.1-x64.exe](https://github.com/miiaowuwu/dsh-sound-lab/releases/latest/download/dsh-sound-lab-Setup-1.2.1-x64.exe) and **double-click it**
+2. Download [dsh-sound-lab-Setup-1.2.2-x64.exe](https://github.com/miiaowuwu/dsh-sound-lab/releases/latest/download/dsh-sound-lab-Setup-1.2.2-x64.exe) and **double-click it**
 3. The installer **restarts dsh automatically** — the 🔊 floating ball means it's installed
 
 - **Update**: re-download the latest Setup exe and run it (restarts dsh automatically; older versions are overwritten automatically — no need to uninstall first, no conflicts)
-- **Uninstall**: double-click [dsh-sound-lab-UnSetup-1.2.1-x64.exe](https://github.com/miiaowuwu/dsh-sound-lab/releases/latest/download/dsh-sound-lab-UnSetup-1.2.1-x64.exe) — it restarts dsh automatically when done
+- **Uninstall**: double-click [dsh-sound-lab-UnSetup-1.2.2-x64.exe](https://github.com/miiaowuwu/dsh-sound-lab/releases/latest/download/dsh-sound-lab-UnSetup-1.2.2-x64.exe) — it restarts dsh automatically when done
 
 > Note (just how it works — no action needed): the installer deploys the plugin to `$DSH_HOME/plugins/dsh-sound-lab` and registers it into **every initialized profile** (web, desktop, …) via the official `dsh plugin` command, so all profiles share the same copy. If no dsh CLI is found, it auto-detects one (desktop bundled runtime → system npx → downloads Node.js); if dsh hasn't been initialized yet (no profiles), it runs `dsh web` once to initialize. On finish it **restarts dsh automatically**: for Desktop it **closes the running instance first, then launches it** (exactly like double-clicking the app — no terminal window, unaffected by closing the installer); when no Desktop app is detected (web environment) it **prompts you to restart the dsh web service manually**. Fully automated, no manual config edits.
 
